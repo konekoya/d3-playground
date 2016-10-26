@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.pie-chart {
+    font-size: 12px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+</style>
+
+<body>
+    <div id="transition">
+      <div class="right">
+      </div>
+    </div>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script>
+        var data = [50, 100, 150, 200];
+        var divs = d3.select('#transition .right')
+          .selectAll('div.item')
+          .data(data);
+
+
+        divs.enter()
+          .append('div')
+          .classed('item', true)
+        divs.style({
+          width: '20px',
+          height: function(d) { return d + 'px'; },
+          margin: '15px',
+          float: 'left',
+          'background-color': '#25B0B0'
+        });
+
+
+        data = [100, 200, 20, 100];
+        divs.select('#transition .right')
+          .selectAll('div.item')
+
+        divs
+          .data(data)
+          .on('click', function (d, i) {
+            d3.select(this)
+              .transition()
+              .delay(0)
+              .duration(300)
+              .style({
+                'background-color': '42efef',
+                'width': '30px',
+                'text-align': 'center'
+              })
+              .text(i)
+          })
+          .transition()
+          .delay(0)
+          .duration(1000)
+          .style({
+            height: function(d) { return d + 'px'; },
+            'background-color': '#ff4444'
+          });
+    </script>
+</body>
+
+</html>
