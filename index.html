@@ -17,7 +17,7 @@
     "label": "Sales by category",
     "value": "150",
     "category": [{
-      "label": "Food & {br}Beverages",
+      "label": "Food & Beverages",
       "value": "55.5",
       "category": [{
         "label": "Breads",
@@ -33,7 +33,7 @@
         "value": "6.66"
       }]
     }, {
-      "label": "Apparel &{br}Accessories",
+      "label": "Apparel & Accessories",
       "value": "42",
       "category": [{
         "label": "Sun Glasses",
@@ -49,10 +49,10 @@
         "value": "6.72"
       }]
     }, {
-      "label": "Baby {br}Products",
+      "label": "Baby Products",
       "value": "22.5",
       "category": [{
-        "label": "Bath &{br}Grooming",
+        "label": "Bath & Grooming",
         "value": "9.45"
       }, {
         "label": "Feeding",
@@ -77,11 +77,29 @@
     }]
   }];
 
+  var utils = {};
+  utils.depthOf = function(object) {
+      var level = 1;
+      var key;
+      for(key in object) {
+          if (!object.hasOwnProperty(key)) continue;
+
+          if(typeof object[key] == 'object'){
+              var depth = utils.depthOf(object[key]) + 1;
+              level = Math.max(depth, level);
+          }
+      }
+      return level;
+  };
+
+  utils.depthOf(dataset);
+  debugger;
+
   var pieChart = document.getElementById('pie-chart');
-  var width = 900;
-  var height = 500;
+  var width = 1200;
+  var height = 900;
   var radius = Math.min(width, height) / 2;
-  var cwidth = 45;
+  var cwidth = 75;
   var color = d3.scale
     .ordinal()
     .range(["#c2e699", "#78c679", "#31a354", "#006837"]);
@@ -101,6 +119,8 @@
   //     .attr('class', 'hint hint--is-hidden');
   var scannedArr = [];
   var tempArr = [];
+  var currentArrLen = -1;
+  var currentArr = [];
 
   function scan(obj) {
     var key;
@@ -113,29 +133,40 @@
           // debugger;
           if (obj.length === 1) {
             tempArr.push(obj[key].value);
-            tempArr = pie(tempArr);
-            tempArr[0].label = obj[key].label;
+            // tempArr = pie(tempArr);
+            // tempArr[0].label = obj[key].label;
             scannedArr.push(tempArr);
             tempArr = [];
 
           } else if (obj.length !== 1 && Array.isArray(obj[key])) {
-            var currentArr = obj[key];
+            // debugger;
+            currentArr = obj[key];
             // debugger;
 
+            if (currentArrLen === -1) {
+              currentArrLen = obj[key].length;
+            } 
+
             currentArr.forEach((item) => {
+              // debugger;
               tempArr.push(item.value);
             });
 
-            tempArr = pie(tempArr);
+            // tempArr = pie(tempArr);
 
-            currentArr.forEach((item, index) => {
-              tempArr[index].label = item.label;
-            });
+            // currentArr.forEach((item, index) => {
+            //   tempArr[index].label = item.label;
+            // });
 
             // debugger;
 
             scannedArr.push(tempArr);
             tempArr = [];
+            
+            if (currentArrLen !== 0) {
+              currentArrLen--;
+            }
+
           }
           scan(obj[key]);
         }
@@ -152,6 +183,11 @@
     .sort(null);
 
   var scannedData = scan(dataset);
+  var concatedArr = [].concat.apply([], [scannedData[2], scannedData[3], scannedData[4], scannedData[5]])
+  scannedData.length = 2;
+  scannedData.push(concatedArr);
+
+  debugger;
   var gs = svg.selectAll('g.wrapper')
     .data((d, i) => {
       debugger;
@@ -166,30 +202,38 @@
 
   debugger;
 
-
-  debugger;
-
   var archs = gs.selectAll('path')
     .data((d) => {
       debugger;
-      return d;
+      return pie(d);
     })
     .enter()
     .append('g')
     .attr('class', 'pie-chart__slice');
 
   debugger;
-  var j = 0;
   archs.append('path')
     .attr('d', (d, i, j) => {
       debugger;
       d.arc = d3.svg
         .arc()
-        .innerRadius(cwidth * j)
+        .innerRadius(2 + cwidth * j)
         .outerRadius(cwidth * (j + 1));
       return d.arc(d);
     })
-    .attr('fill', (d, i) => color(i));
+    .attr('fill', (d, i, j) => {
+      if (j < 2) {
+        return color(i);
+      } else if (j === 2 && i < 4) {
+        return '#c2e699';
+      } else if (j === 2 && i > 3 && i < 8) {
+        return '#78c679';
+      } else if (j === 2 && i > 7 && i < 11) {
+        return '#31a354';
+      } else if (j === 2 && i > 10) {
+        return '#006837';
+      }
+    });
 
 
   // archs.append('text')
@@ -199,7 +243,7 @@
   //         return 'translate(' + c[0] + "," + c[1] + ')';
   //     })
   //     .text((d) => {
-  //         return `${d.label} ${d.data} %`;
+  //         return `${d.label}`;
   //     });
 
   // archs.on('mouseover', (d) => {
