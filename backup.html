@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.pie-chart {
+  font-size: 12px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+</style>
+
+<body>
+  <div id="pie-chart" class="pie-chart">
+  </div>
+  <script src="//d3js.org/d3.v3.min.js"></script>
+  <script>
+
+  // var dataset = [{
+  //   "label": "Sales by category",
+  //   "value": "150",
+  //   "category": [{
+  //     "label": "Food & Beverages",
+  //     "value": "55.5",
+  //     "category": [{
+  //       "label": "Breads",
+  //       "value": "11.1"
+  //     }, {
+  //       "label": "Juice",
+  //       "value": "27.75"
+  //     }, {
+  //       "label": "Noodles",
+  //       "value": "9.99"
+  //     }, {
+  //       "label": "Seafood",
+  //       "value": "6.66"
+  //     }]
+  //   }, {
+  //     "label": "Apparel & Accessories",
+  //     "value": "42",
+  //     "category": [{
+  //       "label": "Sun Glasses",
+  //       "value": "10.08"
+  //     }, {
+  //       "label": "Clothing",
+  //       "value": "18.9"
+  //     }, {
+  //       "label": "Handbags",
+  //       "value": "6.3"
+  //     }, {
+  //       "label": "Shoes",
+  //       "value": "6.72"
+  //     }]
+  //   }, {
+  //     "label": "Baby Products",
+  //     "value": "22.5",
+  //     "category": [{
+  //       "label": "Bath & Grooming",
+  //       "value": "9.45"
+  //     }, {
+  //       "label": "Feeding",
+  //       "value": "6.3"
+  //     }, {
+  //       "label": "Diapers",
+  //       "value": "6.75"
+  //     }]
+  //   }, {
+  //     "label": "Electronics",
+  //     "value": "30",
+  //     "category": [{
+  //       "label": "Laptops",
+  //       "value": "8.1"
+  //     }, {
+  //       "label": "Televisions",
+  //       "value": "10.5"
+  //     }, {
+  //       "label": "SmartPhones",
+  //       "value": "11.4"
+  //     }]
+  //   }]
+  // }];
+
+var row1 = [{
+  "label": "Sales by category",
+  "value": "100",
+  "category": []
+}];
+
+var row2 = [{
+  "label": "Food & Beverages",
+  "category": [
+    {
+      "label": "Breads",
+      "value": "25"
+    },
+    {
+      "label": "Juice",
+      "value": "75"
+    }
+  ]
+}];
+
+var lastRow = [{
+  "label": "Apparel & Accessories",
+  "category": [
+    {
+      "label": "Section A",
+      "category": [
+        {
+          "label": "Clothing",
+          "value": "25"
+        },
+        {
+          "label": "Handbags",
+          "value": "25"
+        },
+        {
+          "label": "Shoes",
+          "value": "25"
+        }
+      ]
+    },
+    {
+      "label": "Section B",
+      "category": [
+        {
+          "label": "Faces",
+          "value": "25"
+        }
+      ]
+    }
+  ]
+}];
+
+  var pieChart = document.getElementById('pie-chart');
+  var width = 1200;
+  var height = 900;
+  var radius = Math.min(width, height) / 2;
+  var cwidth = 75;
+  var color = d3.scale
+    .ordinal()
+    .range(["#c2e699", "#78c679", "#31a354", "#006837"]);
+
+  var svg = d3.select(pieChart)
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+    .attr({
+      class: 'wrapper',
+      transform: 'translate(' + width / 2 + ',' + height / 2 + ')'
+    });
+
+  // var hint = d3.select(pieChart)
+  //     .append('div')
+  //     .attr('class', 'hint hint--is-hidden');
+  var scannedArr = [];
+  var tempArr = [];
+  var currentArrLen = -1;
+  var currentArr = [];
+  var level = 3;
+
+  // function scan(obj, depth) {
+  //   var key;
+
+  //   // debugger
+  //   if (obj instanceof Object) {
+  //     // debugger;
+  //     for (key in obj) {
+  //       // debugger;
+  //       if (obj.hasOwnProperty(key)) {
+  //         // debugger;
+  //         if (obj.length === 1) {
+  //           tempArr.push(obj[key].value);
+  //           // tempArr = pie(tempArr);
+  //           // tempArr[0].label = obj[key].label;
+  //           scannedArr.push(tempArr);
+  //           tempArr = [];
+
+  //         } else if (obj.length !== 1 && Array.isArray(obj[key])) {
+  //           // debugger;
+  //           depth++
+  //           currentArr = obj[key];
+  //           // debugger;
+
+  //           currentArr.forEach((item) => {
+  //             // debugger;
+  //             tempArr.push(item.value);
+  //           });
+
+  //           // tempArr = pie(tempArr);
+
+  //           // currentArr.forEach((item, index) => {
+  //           //   tempArr[index].label = item.label;
+  //           // });
+
+  //           // debugger;
+
+  //           scannedArr.push(tempArr);
+  //           tempArr = [];
+  //         }
+  //         scan(obj[key], depth);
+  //       }
+  //     }
+  //   }
+  //   return scannedArr;
+  // };
+
+  var pie = d3.layout.pie()
+    .value((d) => {
+      // debugger;
+      return d;
+    })
+    .sort(null);
+
+  // var scannedData = scan(dataset);
+  // debugger;
+  // var concatedArr = [].concat.apply([], [scannedData[2], scannedData[3]])
+  // scannedData.length = 2;
+  // scannedData.push(concatedArr);
+
+  var totalRows = 3;
+
+
+  function extractValues(jsonFormatData = {}) {
+    var data = jsonFormatData;
+    data = data[0].category;
+    data = data.map((item) => {
+      return item.value;
+    });
+
+    return data;
+  }
+
+  var row1Values = [row1[0].value];
+  var row2Values = extractValues(row2);
+  var lastRowValues = extractValues(lastRow)
+  console.log(row1Values);
+  console.log(row2Values);
+  console.log(lastRowValues);
+  debugger;
+
+  debugger;
+  var gs = svg.selectAll('g.wrapper')
+    .data((d, i) => {
+      debugger;
+      return d3.values(scannedData);
+    })
+    .enter()
+    .append('g')
+    .attr('id', (d, i) => {
+      debugger
+      return Object.keys(dataset)[i];
+    });
+
+  debugger;
+
+  var archs = gs.selectAll('path')
+    .data((d) => {
+      debugger;
+      return pie(d);
+    })
+    .enter()
+    .append('g')
+    .attr('class', 'pie-chart__slice');
+
+  debugger;
+  archs.append('path')
+    .attr('d', (d, i, j) => {
+      debugger;
+      d.arc = d3.svg
+        .arc()
+        .innerRadius(2 + cwidth * j)
+        .outerRadius(cwidth * (j + 1));
+      return d.arc(d);
+    })
+    .attr('fill', (d, i, j) => {
+      // if (j < 2) {
+        return color(i);
+      // } else if (j === 2 && i < 4) {
+      //   return '#c2e699';
+      // } else if (j === 2 && i > 3 && i < 8) {
+      //   return '#78c679';
+      // } else if (j === 2 && i > 7 && i < 11) {
+      //   return '#31a354';
+      // } else if (j === 2 && i > 10) {
+      //   return '#006837';
+      // }
+    });
+
+
+  // archs.append('text')
+  //     .attr('text-anchor', 'middle')
+  //     .attr('transform', function(d) {
+  //         var c = d.arc.centroid(d);
+  //         return 'translate(' + c[0] + "," + c[1] + ')';
+  //     })
+  //     .text((d) => {
+  //         return `${d.label}`;
+  //     });
+
+  // archs.on('mouseover', (d) => {
+  //   var text = d3.event.target.nextElementSibling || null; // get current text el
+  //   if (text) {
+  //     var patterns = /\(([^)]+)\)/; // grab everything that is inside parentheses
+  //     var TranslatePositions = text.getAttribute('transform'); // get transform info from current text el
+  //     var matches = patterns.exec(TranslatePositions)[1].split(','); // extract the transform info with regExp
+
+  //     hint.classed('hint--is-hidden', false)
+  //       .classed('hint--is-active', true)
+  //       .style('transform', 'translate(' + Math.floor(matches[0]) + 'px' + ',' + Math.floor(matches[1]) + 'px' + ')')
+  //       .text(() => {
+  //         // debugger;
+  //         return `${d.label} ${d.data} %`;
+  //       });
+  //   }
+  // });
+
+  // archs.on('mouseout', () => {
+  //   hint.classed('hint--is-active', false)
+  //     .classed('hint--is-hidden', true)
+  //     .text('');
+  // });
+  </script>
+function scan(obj, depth) {
+    depth++
+    var key;
+
+    if (obj instanceof Object) {
+      // debugger;
+      for (key in obj) {
+        // debugger;
+        if (obj.hasOwnProperty(key)) {
+          // debugger;
+          if (obj.length === 1) {
+            tempArr.push(obj[key].value);
+            // tempArr = pie(tempArr);
+            // tempArr[0].label = obj[key].label;
+            scannedArr.push(tempArr);
+            tempArr = [];
+
+          } else if (obj.length !== 1 && Array.isArray(obj[key])) {
+            // debugger;
+            currentArr = obj[key];
+            // debugger;
+
+            if (currentArrLen === -1) {
+              currentArrLen = obj[key].length;
+            } 
+
+            currentArr.forEach((item) => {
+              // debugger;
+              tempArr.push(item.value);
+            });
+
+            // tempArr = pie(tempArr);
+
+            // currentArr.forEach((item, index) => {
+            //   tempArr[index].label = item.label;
+            // });
+
+            // debugger;
+
+            scannedArr.push(tempArr);
+            tempArr = [];
+            
+            if (currentArrLen !== 0) {
+              currentArrLen--;
+            }
+
+          }
+          scan(obj[key]);
+        }
+      }
+    }
+    return scannedArr;
+  };

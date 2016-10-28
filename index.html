@@ -12,88 +12,52 @@
   </div>
   <script src="//d3js.org/d3.v3.min.js"></script>
   <script>
+  var scannedArr = [];
+  var tempArr = [];
+  var currentArrLen = -1;
+  var currentArr = [];
+  var level = 3;
 
-  var dataset = [{
+  var row1 = [{
     "label": "Sales by category",
-    "value": "150",
+    "value": "100",
+    "category": []
+  }];
+
+  var row2 = [{
+    "label": "Food & Beverages",
     "category": [{
-      "label": "Food & Beverages",
-      "value": "55.5",
-      "category": [{
-        "label": "Breads",
-        "value": "11.1"
-      }, {
-        "label": "Juice",
-        "value": "27.75"
-      }, {
-        "label": "Noodles",
-        "value": "9.99"
-      }, {
-        "label": "Seafood",
-        "value": "6.66"
-      }]
+      "label": "Breads",
+      "value": "25"
     }, {
-      "label": "Apparel & Accessories",
-      "value": "42",
+      "label": "Juice",
+      "value": "75"
+    }]
+  }];
+
+  var lastRow = [{
+    "label": "Apparel & Accessories",
+    "category": [{
+      "label": "Section A",
       "category": [{
-        "label": "Sun Glasses",
-        "value": "10.08"
-      }, {
         "label": "Clothing",
-        "value": "18.9"
+        "value": "25"
       }, {
         "label": "Handbags",
-        "value": "6.3"
+        "value": "25"
       }, {
         "label": "Shoes",
-        "value": "6.72"
+        "value": "25"
       }]
     }, {
-      "label": "Baby Products",
-      "value": "22.5",
+      "label": "Section B",
       "category": [{
-        "label": "Bath & Grooming",
-        "value": "9.45"
-      }, {
-        "label": "Feeding",
-        "value": "6.3"
-      }, {
-        "label": "Diapers",
-        "value": "6.75"
-      }]
-    }, {
-      "label": "Electronics",
-      "value": "30",
-      "category": [{
-        "label": "Laptops",
-        "value": "8.1"
-      }, {
-        "label": "Televisions",
-        "value": "10.5"
-      }, {
-        "label": "SmartPhones",
-        "value": "11.4"
+        "label": "Faces",
+        "value": "25"
       }]
     }]
   }];
 
-  var utils = {};
-  utils.depthOf = function(object) {
-      var level = 1;
-      var key;
-      for(key in object) {
-          if (!object.hasOwnProperty(key)) continue;
-
-          if(typeof object[key] == 'object'){
-              var depth = utils.depthOf(object[key]) + 1;
-              level = Math.max(depth, level);
-          }
-      }
-      return level;
-  };
-
-  utils.depthOf(dataset);
-  debugger;
 
   var pieChart = document.getElementById('pie-chart');
   var width = 1200;
@@ -114,59 +78,24 @@
       transform: 'translate(' + width / 2 + ',' + height / 2 + ')'
     });
 
-  // var hint = d3.select(pieChart)
-  //     .append('div')
-  //     .attr('class', 'hint hint--is-hidden');
-  var scannedArr = [];
-  var tempArr = [];
-  var currentArrLen = -1;
-  var currentArr = [];
-
   function scan(obj) {
     var key;
 
     if (obj instanceof Object) {
-      // debugger;
       for (key in obj) {
-        // debugger;
         if (obj.hasOwnProperty(key)) {
-          // debugger;
-          if (obj.length === 1) {
-            tempArr.push(obj[key].value);
-            // tempArr = pie(tempArr);
-            // tempArr[0].label = obj[key].label;
-            scannedArr.push(tempArr);
-            tempArr = [];
-
-          } else if (obj.length !== 1 && Array.isArray(obj[key])) {
-            // debugger;
+          if (obj.length !== 1 && Array.isArray(obj[key])) {
             currentArr = obj[key];
-            // debugger;
-
-            if (currentArrLen === -1) {
-              currentArrLen = obj[key].length;
-            } 
-
             currentArr.forEach((item) => {
-              // debugger;
-              tempArr.push(item.value);
+              if (item.value) {
+                tempArr.push(item.value);
+              }
             });
 
-            // tempArr = pie(tempArr);
-
-            // currentArr.forEach((item, index) => {
-            //   tempArr[index].label = item.label;
-            // });
-
-            // debugger;
-
-            scannedArr.push(tempArr);
-            tempArr = [];
-            
-            if (currentArrLen !== 0) {
-              currentArrLen--;
+            if (tempArr.length > 0) {
+              scannedArr.push(tempArr);
             }
-
+            tempArr = [];
           }
           scan(obj[key]);
         }
@@ -177,95 +106,164 @@
 
   var pie = d3.layout.pie()
     .value((d) => {
-      // debugger;
       return d;
     })
     .sort(null);
 
-  var scannedData = scan(dataset);
-  var concatedArr = [].concat.apply([], [scannedData[2], scannedData[3], scannedData[4], scannedData[5]])
-  scannedData.length = 2;
-  scannedData.push(concatedArr);
+  var totalRows = 3;
+  var row1Values = [row1[0].value];
+  var row2Values = extractValues(row2);
+  var lastRowValues = scan(lastRow)
 
+  function extractValues(jsonFormatData = {}) {
+    var data = jsonFormatData;
+    data = data[0].category;
+    data = data.map((item) => {
+      return Number(item.value);
+    });
+
+    return data;
+  }
+
+  function sum(arr = []) {
+    var number = 0;
+    arr.map((item) => {
+      number += Number(item)
+    });
+    return number;
+  }
+
+  function compareValue(currentArr = [], parentArr = []) {
+    var current = currentArr;
+    current = current.map((item) => {
+      return sum(item)
+    }).sort();
+
+    var newArr = [];
+    current.forEach((item, i) => {
+      if (current[i] === parentArr[i]) {
+        newArr[i] = [parentArr[i], currentArr[i]];
+      }
+    });
+    return newArr;
+  };
+
+  var comparedData = compareValue(lastRowValues, row2Values);
+  comparedData.unshift(row1Values);
+  var lastItem = comparedData.pop();
+  comparedData.splice(1, 0, lastItem);
   debugger;
+
+  comparedData = [
+    [100],
+    [[25, 75], [75, [25, 25, 25]]]
+  ];
+
   var gs = svg.selectAll('g.wrapper')
     .data((d, i) => {
-      debugger;
-      return d3.values(scannedData);
+      return d3.values(comparedData);
     })
     .enter()
     .append('g')
     .attr('id', (d, i) => {
-      debugger
-      return Object.keys(dataset)[i];
+      return Object.keys(comparedData)[i];
     });
-
-  debugger;
 
   var archs = gs.selectAll('path')
     .data((d) => {
-      debugger;
-      return pie(d);
+      if (d.length === 1) {
+        debugger;
+        return pie(d);
+      } else if (d.length > 1) {
+        debugger;
+        var arr = [];
+        d.forEach((item) => {
+          if (typeof Number(item) === 'number') {
+            arr.push(item);
+            debugger;
+          }
+          if (Array.isArray(item)) {
+            arr.push(...item);
+            debugger;
+          }
+        });
+
+        arr = pie(arr);
+
+        // d.forEach((item) => {
+        //   if (!Array.isArray(item)) {
+        //     debugger;
+        //     item.forEach((el) => {
+        //       arr.push(item);
+        //       arr = pie(arr);
+        //     })
+        //     return arr;
+        //   } else if (Array.isArray(item)) {
+        //     debugger;
+        //     item.forEach((el) => {
+        //       el = pie(el);
+        //       elArr.push(item);
+        //     })
+        //     debugger;
+        //     arr.push(elArr);
+        //   }
+        // });
+        // debugger;
+        // return arr;
+      }
     })
     .enter()
     .append('g')
     .attr('class', 'pie-chart__slice');
 
   debugger;
-  archs.append('path')
+  // d3.selectAll('.wrapper g:nth-child(1)')
+    archs
+    .append('path')
     .attr('d', (d, i, j) => {
       debugger;
-      d.arc = d3.svg
-        .arc()
-        .innerRadius(2 + cwidth * j)
-        .outerRadius(cwidth * (j + 1));
-      return d.arc(d);
+      if (d.data) {
+        console.log(`i === ${i}`);
+        console.log(`j === ${j}`);
+        console.log(`current data === ${d.data}`);
+        d.arc = d3.svg
+          .arc()
+          .innerRadius(2 + cwidth * j)
+          .outerRadius(cwidth * (j + 1));
+      debugger;
+
+        return d.arc(d);
+      } else if (d.length > 0) {
+        d.forEach((item) => {
+          console.log(`i === ${i}`);
+          console.log(`j === ${j}`);
+          console.log(`current data === ${item.data}`);
+          console.log('-----------------------------');
+          debugger;
+          item.arc = d3.svg
+            .arc()
+            .innerRadius(2 + cwidth * j)
+            .outerRadius(cwidth * (j + 1));
+
+            debugger;
+            archs[j].forEach((el) => {
+              debugger;
+              el.children[0].setAttribute('d', item.arc(item));
+            });
+        });
+      }
     })
     .attr('fill', (d, i, j) => {
-      if (j < 2) {
-        return color(i);
-      } else if (j === 2 && i < 4) {
-        return '#c2e699';
-      } else if (j === 2 && i > 3 && i < 8) {
-        return '#78c679';
-      } else if (j === 2 && i > 7 && i < 11) {
-        return '#31a354';
-      } else if (j === 2 && i > 10) {
-        return '#006837';
-      }
+      // if (j < 2) {
+      return color(i);
+      // } else if (j === 2 && i < 4) {
+      //   return '#c2e699';
+      // } else if (j === 2 && i > 3 && i < 8) {
+      //   return '#78c679';
+      // } else if (j === 2 && i > 7 && i < 11) {
+      //   return '#31a354';
+      // } else if (j === 2 && i > 10) {
+      //   return '#006837';
+      // }
     });
-
-
-  // archs.append('text')
-  //     .attr('text-anchor', 'middle')
-  //     .attr('transform', function(d) {
-  //         var c = d.arc.centroid(d);
-  //         return 'translate(' + c[0] + "," + c[1] + ')';
-  //     })
-  //     .text((d) => {
-  //         return `${d.label}`;
-  //     });
-
-  // archs.on('mouseover', (d) => {
-  //   var text = d3.event.target.nextElementSibling || null; // get current text el
-  //   if (text) {
-  //     var patterns = /\(([^)]+)\)/; // grab everything that is inside parentheses
-  //     var TranslatePositions = text.getAttribute('transform'); // get transform info from current text el
-  //     var matches = patterns.exec(TranslatePositions)[1].split(','); // extract the transform info with regExp
-
-  //     hint.classed('hint--is-hidden', false)
-  //       .classed('hint--is-active', true)
-  //       .style('transform', 'translate(' + Math.floor(matches[0]) + 'px' + ',' + Math.floor(matches[1]) + 'px' + ')')
-  //       .text(() => {
-  //         // debugger;
-  //         return `${d.label} ${d.data} %`;
-  //       });
-  //   }
-  // });
-
-  // archs.on('mouseout', () => {
-  //   hint.classed('hint--is-active', false)
-  //     .classed('hint--is-hidden', true)
-  //     .text('');
-  // });
   </script>
