@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Work with APIs</title>
+  <script src="./d3.min.js"></script>
+</head>
+
+<body>
+
+<script>
+var h = 100;
+var w = 400;
+
+
+function showHeader(ds) {
+
+  d3.select("body").append("h1")
+    .text(ds.category + " Sales (2013)");
+
+}
+
+function buildLine(ds) {
+
+  var lineFun = d3.svg.line()
+    .x(function(d) {
+      return ((d.month - 20130001) / 3.25);
+    })
+    .y(function(d) {
+      return h - d.sales;
+    })
+    .interpolate("linear");
+
+  var svg = d3.select("body").append("svg").attr({
+    width: w,
+    height: h
+  });
+
+  var viz = svg.append("path")
+    .attr({
+      d: lineFun(ds.monthlySales), //we have to refernce the sales data array
+      "stroke": "purple",
+      "stroke-width": 2,
+      "fill": "none"
+    });
+
+}
+
+var decodeData = null;
+//call to load data and then build our viz
+d3.json("https://api.github.com/repos/bsullins/d3js-resources/contents/monthlySalesbyCategoryMultiple.json", function(error, data) {
+
+  //check the file loaded properly
+  if (error) {
+    console.log(error);
+  } else {
+    console.log(data);
+  }
+
+  decodeData = JSON.parse(window.atob(data.content));
+
+  decodeData.contents.forEach(function(ds) {
+    console.log(ds);
+    showHeader(ds); //give our chart a title
+    buildLine(ds); //draw our line
+  });
+
+});
+</script>
+</body>
+
+</html>

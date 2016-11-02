@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Raw data manipulation</title>
+</head>
+
+<body>
+  <h1>Raw data manipulation</h1>
+  <script>
+  var data = [{
+    "category": "Search Engines",
+    "hits": 5,
+    "bytes": 50189
+  }, {
+    "category": "Content Server",
+    "hits": 1,
+    "bytes": 17308
+  }, {
+    "category": "Content Server",
+    "hits": 1,
+    "bytes": 47412
+  }, {
+    "category": "Search Engines",
+    "hits": 1,
+    "bytes": 7601
+  }, {
+    "category": "Business",
+    "hits": 1,
+    "bytes": 2847
+  }, {
+    "category": "Content Server",
+    "hits": 1,
+    "bytes": 24210
+  }, {
+    "category": "Internet Services",
+    "hits": 1,
+    "bytes": 3690
+  }, {
+    "category": "Search Engines",
+    "hits": 6,
+    "bytes": 613036
+  }, {
+    "category": "Search Engines",
+    "hits": 1,
+    "bytes": 2858
+  }];
+
+
+  objArr = [{
+    key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
+    val: 42
+  }, {
+    key: "Mon Sep 24 2013 00: 00: 00 GMT - 0400",
+    val: 78
+  }, {
+    key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
+    val: 23
+  }, {
+    key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
+    val: 54
+  }, {
+    key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
+    val: 109
+  }, {
+    key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
+    val: 80
+  }];
+
+  // var temp = {};
+  // var obj = null;
+
+  // for (var i = 0; i < data.length; i++) {
+  //   obj = data[i];
+
+  //   if (!temp[obj.category]) {
+  //     temp[obj.category] = obj;
+  //   } else {
+  //     temp[obj.category].bytes += obj.bytes;
+  //     temp[obj.category].hits += obj.hits;
+  //   }
+  // }
+  // var result = [];
+  // debugger;
+
+  // for (var prop in temp) {
+  //   debugger;
+
+  //   result.push(temp[prop]);
+  // }
+
+  function groupBy(data = [], key = '',  numberKeys=[]) {
+    let temp = {};
+    let obj = null;
+    let result = [];
+
+    for (let i = 0; i < data.length; i++) {
+      obj = data[i];
+
+      if (!temp[obj[key]]) {
+        temp[obj[key]] = obj;
+      } else {
+        console.log(numberKeys.length);
+        numberKeys.forEach((item) => {
+          temp[obj[key]][item] += obj[item];
+        });
+      }
+    }
+
+    for (let prop in temp) {
+      result.push(temp[prop]);
+    }
+
+    return result;
+  }
+
+  let groupedData = groupBy(data, 'category', ['bytes', 'hits']);
+  let groupedObjData = groupBy(objArr, 'key', ['val']);
+
+  console.log(groupedData);
+  console.log(groupedObjData);
+  </script>
+</body>
+
+</html>
