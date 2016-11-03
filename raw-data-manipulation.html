@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Raw data manipulation</title>
+  <script src="http://cdn.jsdelivr.net/alasql/latest/alasql.min.js"></script>
   <script src="./d3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
@@ -511,9 +512,7 @@ var data = [
 
       if (!temp[obj[key]]) {
         temp[obj[key]] = obj;
-        console.log(temp);
       } else {
-        console.log(temp);
         numberKeys.forEach((item) => {
           temp[obj[key]][item] += obj[item];
         });
@@ -546,12 +545,26 @@ var data = [
   let col_1 = groupBy(data, 'Region', ['Unit', 'Actual Sales']);
   let col_2 = groupBy(data, 'Country', ['Unit', 'Actual Sales']);
   let col_3 = groupBy(data, 'Buyer', ['Unit', 'Actual Sales']);
-  console.log(col_1);
-  console.log(col_2);
-  console.log(col_3);
 
   var arr = [col_1, col_2, col_3];
   console.log(arr);
+
+  var res_1 = alasql('SELECT Region, SUM([Actual Sales]) AS num FROM ? GROUP BY Region ORDER BY Region', [data]);
+  var res_2 = alasql('SELECT Region, Country, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country ORDER BY Country', [data]);
+  var res_3 = alasql('SELECT Region, Country, Buyer, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer ORDER BY Region, Country', [data]);
+
+  console.log(res_1);
+  console.log(res_2);
+  console.log(res_3);
+  // var res_2 = alasql('SELECT Country, SUM([Actual Sales]) AS num FROM ? GROUP BY Region, Country', [data]);
+  // var res_3 = alasql('SELECT Buyer, SUM([Actual Sales]) AS num FROM ? GROUP BY Region, Country, Buyer', [data]);
+  // console.log(res_1);
+  // console.log(res_2);
+  // console.log(res_3);
+
+  var newArr = [res_1, res_2, res_3];
+  console.log(newArr);
+
   </script>
 </body>
 

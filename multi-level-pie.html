@@ -9,7 +9,8 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
   <style>
     body {
-      font-size: 14px;
+      padding: 60px 0 0 0;
+      font-size: 11px;
       font-family: Lato, Arial, "Helvetica Neue", Helvetica, sans-serif;
       font-weight: bold;
       width: 800px;
@@ -25,11 +26,26 @@
     .arc path {
       stroke: #fff;
     }
+
+    .Taiwan {
+      fill: #c2e699;
+    }
+
+    .Taiwan.Taipei {
+      fill: #78c679;
+    }
+
+    .Taiwan.Kaochung {
+      fill: #31a354;
+    }
+
+    .Taiwan.TaiChung {
+      fill: #006837;
+    }
   </style>
 </head>
 
 <body>
-  <h1>World Population by age</h1>
   <script>
   /*
       Here is the compact implementation of the json data. Ideally it should be stored in a json file and should be retrieved by d3.json
@@ -172,7 +188,7 @@
   }];
 
   const width = 500;
-  const height = 800;
+  const height = 500;
   const maxRadius = Math.min(width, height) / 2;
 
   const svg = d3.select("body").append("svg")
@@ -240,7 +256,7 @@
     const pie = d3.layout.pie()
       .sort(null)
       .value(function(d) {
-        return d["Actual Sales"];
+        return d.num;
       });
 
     const arc = d3.svg.arc()
@@ -250,10 +266,21 @@
     let g = svg.selectAll(".arc" + index).data(pie(_data)).enter().append("g")
       .attr("class", "arc" + index);
 
-    g.append("path").attr("d", arc)
-      .style("fill", function(d) {
-        debugger;
-        return color(d.data["Actual Sales"]);
+    let path = g.append("path")
+      .attr("d", arc)
+      // .style("fill", (d) => {
+      //   return color(d.data.num);
+      // });
+      .attr('class', (d) => {
+       if (d.data.Buyer) {
+         return d.data.Region + ' ' + d.data.Country + ' ' + d.data.Buyer; 
+       }
+
+       if (d.data.Country) {
+          return d.data.Region + ' ' + d.data.Country;
+       }
+
+        return d.data.Region;
       });
 
     g.append("text").attr("transform", function(d) {
@@ -263,9 +290,9 @@
         }
         return "translate(" + arc.centroid(d) + ")";
       })
-      .attr("dy", ".35em").style("text-anchor", "middle")
+      .style("text-anchor", "middle")
       .text(function(d) {
-        return d.data["Actual Sales"];
+        return (d.data.Buyer || d.data.Country || d.data.Region) + ' ' + (d.data.num / 2) + ' %';
       });
   }
 
@@ -282,105 +309,78 @@
   multiLevelData = [
   [
     {
-      "Product": "Amarta",
-      "Unit": 20,
-      "Actual Sales": 200,
-      "Seller": "Allen",
-      "Buyer": "Emila",
-      "Country": "Taipei",
       "Region": "Taiwan",
-      "single": true
+      "num": 200
     }
   ],
   [
     {
-      "Product": "Amarta",
-      "Unit": 7,
-      "Actual Sales": 70,
-      "Seller": "Allen",
-      "Buyer": "Emila",
-      "Country": "Taipei",
-      "Region": "Taiwan"
-    },
-    {
-      "Product": "Filo Mix",
-      "Unit": 3,
-      "Actual Sales": 30,
-      "Seller": "Bob",
-      "Buyer": "Farrai",
-      "Country": "TaiChung",
-      "Region": "Taiwan"
-    },
-    {
-      "Product": "Genen",
-      "Unit": 10,
-      "Actual Sales": 100,
-      "Seller": "Dannel",
-      "Buyer": "Farrai",
+      "Region": "Taiwan",
       "Country": "Kaochung",
-      "Region": "Taiwan"
+      "num": 100
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "TaiChung",
+      "num": 30
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Taipei",
+      "num": 70
     }
   ],
   [
     {
-      "Product": "Amarta",
-      "Unit": 1,
-      "Actual Sales": 10,
-      "Seller": "Allen",
-      "Buyer": "Emila",
-      "Country": "Taipei",
-      "Region": "Taiwan"
-    },
-    {
-      "Product": "Filo Mix",
-      "Unit": 6,
-      "Actual Sales": 60,
-      "Seller": "Bob",
+      "Region": "Taiwan",
+      "Country": "Kaochung",
       "Buyer": "Farrai",
-      "Country": "TaiChung",
-      "Region": "Taiwan"
+      "num": 40
     },
     {
-      "Product": "Geitost",
-      "Unit": 6,
-      "Actual Sales": 60,
-      "Seller": "Candy",
-      "Buyer": "Gang",
-      "Country": "Taipei",
-      "Region": "Taiwan"
-    },
-    {
-      "Product": "Filo Mix",
-      "Unit": 1,
-      "Actual Sales": 10,
-      "Seller": "Bob",
-      "Buyer": "Helix",
-      "Country": "TaiChung",
-      "Region": "Taiwan"
-    },
-    {
-      "Product": "Genen",
-      "Unit": 5,
-      "Actual Sales": 50,
-      "Seller": "Dannel",
+      "Region": "Taiwan",
+      "Country": "Kaochung",
       "Buyer": "Irving",
-      "Country": "Kaochung",
-      "Region": "Taiwan"
+      "num": 50
     },
     {
-      "Product": "Genen",
-      "Unit": 1,
-      "Actual Sales": 10,
-      "Seller": "Dannel",
-      "Buyer": "Joe",
+      "Region": "Taiwan",
       "Country": "Kaochung",
-      "Region": "Taiwan"
+      "Buyer": "JJ",
+      "num": 10
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "TaiChung",
+      "Buyer": "Farrai",
+      "num": 20
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "TaiChung",
+      "Buyer": "Helix",
+      "num": 10
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Taipei",
+      "Buyer": "Emila",
+      "num": 10
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Taipei",
+      "Buyer": "Gang",
+      "num": 60
     }
   ]
-];
+]
 
-debugger
   for (let i = 0; i < multiLevelData.length; i++) {
+    if (multiLevelData[i].length === 1) {
+      debugger;
+      multiLevelData[i][0].single = true;
+    }
     let _cData = multiLevelData[i];
     drawPieChart(_cData, i);
   }
