@@ -5,49 +5,49 @@
   <meta charset="UTF-8">
   <title>Raw data manipulation</title>
   <script src="./d3.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
   <h1>Raw data manipulation</h1>
   <script>
-  // var data = [{
-  //   "category": "Search Engines",
-  //   "hits": 5,
-  //   "bytes": 50189
-  // }, {
-  //   "category": "Content Server",
-  //   "hits": 1,
-  //   "bytes": 17308
-  // }, {
-  //   "category": "Content Server",
-  //   "hits": 1,
-  //   "bytes": 47412
-  // }, {
-  //   "category": "Search Engines",
-  //   "hits": 1,
-  //   "bytes": 7601
-  // }, {
-  //   "category": "Business",
-  //   "hits": 1,
-  //   "bytes": 2847
-  // }, {
-  //   "category": "Content Server",
-  //   "hits": 1,
-  //   "bytes": 24210
-  // }, {
-  //   "category": "Internet Services",
-  //   "hits": 1,
-  //   "bytes": 3690
-  // }, {
-  //   "category": "Search Engines",
-  //   "hits": 6,
-  //   "bytes": 613036
-  // }, {
-  //   "category": "Search Engines",
-  //   "hits": 1,
-  //   "bytes": 2858
-  // }];
-
+  var data = [{
+    "category": "Search Engines",
+    "hits": 5,
+    "bytes": 50189
+  }, {
+    "category": "Content Server",
+    "hits": 1,
+    "bytes": 17308
+  }, {
+    "category": "Content Server",
+    "hits": 1,
+    "bytes": 47412
+  }, {
+    "category": "Search Engines",
+    "hits": 1,
+    "bytes": 7601
+  }, {
+    "category": "Business",
+    "hits": 1,
+    "bytes": 2847
+  }, {
+    "category": "Content Server",
+    "hits": 1,
+    "bytes": 24210
+  }, {
+    "category": "Internet Services",
+    "hits": 1,
+    "bytes": 3690
+  }, {
+    "category": "Search Engines",
+    "hits": 6,
+    "bytes": 613036
+  }, {
+    "category": "Search Engines",
+    "hits": 1,
+    "bytes": 2858
+  }];
 
   // objArr = [{
   //   key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
@@ -91,6 +91,7 @@
   //   result.push(temp[prop]);
   // }
 
+<<<<<<< Updated upstream
   // const col_1 = [{
   //     "category": "Search Engines",
   //     "hits": 5,
@@ -501,7 +502,7 @@ var data = [
   // ];
 
 
-  function groupBy(data = [], key = '',  numberKeys=[]) {
+  function groupBy(data = [], key = '',  numberKeys = []) {
     let temp = {};
     let obj = null;
     let result = [];
@@ -553,7 +554,6 @@ var data = [
   var arr = [col_1, col_2, col_3];
 
   console.log(arr);
-
   </script>
 </body>
 
