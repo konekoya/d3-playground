@@ -4,69 +4,70 @@
 <head>
   <meta charset="UTF-8">
   <title>Raw data manipulation</title>
+  <script src="./d3.min.js"></script>
 </head>
 
 <body>
   <h1>Raw data manipulation</h1>
   <script>
-  var data = [{
-    "category": "Search Engines",
-    "hits": 5,
-    "bytes": 50189
-  }, {
-    "category": "Content Server",
-    "hits": 1,
-    "bytes": 17308
-  }, {
-    "category": "Content Server",
-    "hits": 1,
-    "bytes": 47412
-  }, {
-    "category": "Search Engines",
-    "hits": 1,
-    "bytes": 7601
-  }, {
-    "category": "Business",
-    "hits": 1,
-    "bytes": 2847
-  }, {
-    "category": "Content Server",
-    "hits": 1,
-    "bytes": 24210
-  }, {
-    "category": "Internet Services",
-    "hits": 1,
-    "bytes": 3690
-  }, {
-    "category": "Search Engines",
-    "hits": 6,
-    "bytes": 613036
-  }, {
-    "category": "Search Engines",
-    "hits": 1,
-    "bytes": 2858
-  }];
+  // var data = [{
+  //   "category": "Search Engines",
+  //   "hits": 5,
+  //   "bytes": 50189
+  // }, {
+  //   "category": "Content Server",
+  //   "hits": 1,
+  //   "bytes": 17308
+  // }, {
+  //   "category": "Content Server",
+  //   "hits": 1,
+  //   "bytes": 47412
+  // }, {
+  //   "category": "Search Engines",
+  //   "hits": 1,
+  //   "bytes": 7601
+  // }, {
+  //   "category": "Business",
+  //   "hits": 1,
+  //   "bytes": 2847
+  // }, {
+  //   "category": "Content Server",
+  //   "hits": 1,
+  //   "bytes": 24210
+  // }, {
+  //   "category": "Internet Services",
+  //   "hits": 1,
+  //   "bytes": 3690
+  // }, {
+  //   "category": "Search Engines",
+  //   "hits": 6,
+  //   "bytes": 613036
+  // }, {
+  //   "category": "Search Engines",
+  //   "hits": 1,
+  //   "bytes": 2858
+  // }];
 
 
-  objArr = [{
-    key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
-    val: 42
-  }, {
-    key: "Mon Sep 24 2013 00: 00: 00 GMT - 0400",
-    val: 78
-  }, {
-    key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
-    val: 23
-  }, {
-    key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
-    val: 54
-  }, {
-    key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
-    val: 109
-  }, {
-    key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
-    val: 80
-  }];
+  // objArr = [{
+  //   key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
+  //   val: 42
+  // }, {
+  //   key: "Mon Sep 24 2013 00: 00: 00 GMT - 0400",
+  //   val: 78
+  // }, {
+  //   key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
+  //   val: 23
+  // }, {
+  //   key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
+  //   val: 54
+  // }, {
+  //   key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
+  //   val: 109
+  // }, {
+  //   key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
+  //   val: 80
+  // }];
 
   // var temp = {};
   // var obj = null;
@@ -90,18 +91,429 @@
   //   result.push(temp[prop]);
   // }
 
+  // const col_1 = [{
+  //     "category": "Search Engines",
+  //     "hits": 5,
+  //     "bytes": 50189
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 1,
+  //     "bytes": 17308
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 1,
+  //     "bytes": 47412
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 1,
+  //     "bytes": 7601
+  //   }, {
+  //     "category": "Business",
+  //     "hits": 1,
+  //     "bytes": 2847
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 1,
+  //     "bytes": 24210
+  //   }, {
+  //     "category": "Internet Services",
+  //     "hits": 1,
+  //     "bytes": 3690
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 6,
+  //     "bytes": 613036
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 1,
+  //     "bytes": 2858
+  // }];
+
+  // const col_2 = [{
+  //     "category": "Search Engines",
+  //     "hits": 8,
+  //     "bytes": 501389
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 12,
+  //     "bytes": 173208
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 1,
+  //     "bytes": 471412
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 4,
+  //     "bytes": 76301
+  //   }, {
+  //     "category": "Business",
+  //     "hits": 9,
+  //     "bytes": 284732
+  //   }, {
+  //     "category": "Backup Server",
+  //     "hits": 11,
+  //     "bytes": 22101
+  //   }, {
+  //     "category": "Router",
+  //     "hits": 108,
+  //     "bytes": 36459550
+  //   }, {
+  //     "category": "Router",
+  //     "hits": 81,
+  //     "bytes": 459550
+  //   }, {
+  //     "category": "CMS",
+  //     "hits": 2,
+  //     "bytes": 369550
+  //   }, {
+  //     "category": "CMS",
+  //     "hits": 21,
+  //     "bytes": 45659550
+  //   },{
+  //     "category": "Content Server",
+  //     "hits": 15,
+  //     "bytes": 242101
+  //   }, {
+  //     "category": "Internet Services",
+  //     "hits": 11,
+  //     "bytes": 369550
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 6,
+  //     "bytes": 61036
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 9,
+  //     "bytes": 28458
+  // }];
+
+  // const col_3 = [{
+  //     "category": "Search Engines",
+  //     "hits": 5,
+  //     "bytes": 50189
+  //   }, {
+  //     "category": "Gaming Server",
+  //     "hits": 30,
+  //     "bytes": 17308
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 3,
+  //     "bytes": 178
+  //   }, {
+  //     "category": "Gaming Server",
+  //     "hits": 1,
+  //     "bytes": 173028
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 1,
+  //     "bytes": 47412
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 1,
+  //     "bytes": 7601
+  //   }, {
+  //     "category": "Business",
+  //     "hits": 1,
+  //     "bytes": 2847
+  //   }, {
+  //     "category": "VPN",
+  //     "hits": 11,
+  //     "bytes": 1738
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 1,
+  //     "bytes": 108
+  //   }, {
+  //     "category": "Content Server",
+  //     "hits": 1,
+  //     "bytes": 24210
+  //   }, {
+  //     "category": "Internet Services",
+  //     "hits": 6,
+  //     "bytes": 3690
+  //   }, {
+  //     "category": "Firebase Hosting",
+  //     "hits": 12,
+  //     "bytes": 525406
+  //   }, {
+  //     "category": "Firewall",
+  //     "hits": 61,
+  //     "bytes": 61036
+  //   }, {
+  //     "category": "Backup Server",
+  //     "hits": 3,
+  //     "bytes": 1540
+  //   }, {
+  //     "category": "Firebase Hosting",
+  //     "hits": 35,
+  //     "bytes": 112540
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 6,
+  //     "bytes": 613036
+  //   }, {
+  //     "category": "VPN",
+  //     "hits": 3,
+  //     "bytes": 1540
+  //   }, {
+  //     "category": "Firebase Hosting",
+  //     "hits": 35,
+  //     "bytes": 112540
+  //   }, {
+  //     "category": "Search Engines",
+  //     "hits": 1,
+  //     "bytes": 2858
+  // }];
+
+
+var data = [
+  {
+    "Product": "Amarta",
+    "Unit": 1,
+    "Actual Sales": 10,
+    "Seller": "Allen",
+    "Buyer": "Emila",
+    "Country": "Taipei",
+    "Region": "Taiwan"
+  },
+  {
+    "Product": "Filo Mix",
+    "Unit": 2,
+    "Actual Sales": 20,
+    "Seller": "Bob",
+    "Buyer": "Farrai",
+    "Country": "TaiChung",
+    "Region": "Taiwan"
+  },
+  {
+    "Product": "Geitost",
+    "Unit": 3,
+    "Actual Sales": 30,
+    "Seller": "Candy",
+    "Buyer": "Gang",
+    "Country": "Taipei",
+    "Region": "Taiwan"
+  },
+  {
+    "Product": "Genen",
+    "Unit": 2,
+    "Actual Sales": 20,
+    "Seller": "Dannel",
+    "Buyer": "Farrai",
+    "Country": "Kaochung",
+    "Region": "Taiwan"
+  },
+  {
+    "Product": "Filo Mix",
+    "Unit": 1,
+    "Actual Sales": 10,
+    "Seller": "Bob",
+    "Buyer": "Helix",
+    "Country": "TaiChung",
+    "Region": "Taiwan"
+  },
+  {
+    "Product": "Genen",
+    "Unit": 5,
+    "Actual Sales": 50,
+    "Seller": "Dannel",
+    "Buyer": "Irving",
+    "Country": "Kaochung",
+    "Region": "Taiwan"
+  },
+  {
+    "Product": "Genen",
+    "Unit": 3,
+    "Actual Sales": 30,
+    "Seller": "Dannel",
+    "Buyer": "Gang",
+    "Country": "Taipei",
+    "Region": "Taiwan"
+  },
+  {
+    "Product": "Filo Mix",
+    "Unit": 2,
+    "Actual Sales": 20,
+    "Seller": "Bob",
+    "Buyer": "Farrai",
+    "Country": "Kaochung",
+    "Region": "Taiwan"
+  },
+  {
+    "Product": "Genen",
+    "Unit": 1,
+    "Actual Sales": 10,
+    "Seller": "Dannel",
+    "Buyer": "JJ",
+    "Country": "Kaochung",
+    "Region": "Taiwan"
+  }
+]
+
+
+  //   multiLevelData = [
+  //   [
+  //     {
+  //       "nodeData": {
+  //         "age": "<5",
+  //         "population": 60,
+  //         "color": "#c2e699"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "5-35",
+  //         "population": 100,
+  //         "color": "#78c679"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "35-65",
+  //         "population": 100,
+  //         "color": "#31a354"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": ">65",
+  //         "population": 100,
+  //         "color": "#006837"
+  //       }
+  //     }
+  //   ],
+  //   [
+  //     {
+  //       "nodeData": {
+  //         "age": "<5",
+  //         "population": 60,
+  //         "color": "#c2e699"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "5-15",
+  //         "population": 60,
+  //         "color": "#78c679"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "15-35",
+  //         "population": 40,
+  //         "color": "#78c679"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "35-50",
+  //         "population": 75,
+  //         "color": "#31a354"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "50-65",
+  //         "population": 25,
+  //         "color": "#31a354"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "65-75",
+  //         "population": 60,
+  //         "color": "#006837"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": ">75",
+  //         "population": 40,
+  //         "color": "#006837"
+  //       }
+  //     }
+  //   ],
+  //   [
+  //     {
+  //       "nodeData": {
+  //         "age": "<5",
+  //         "population": 60,
+  //         "color": "#c2e699"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "5-10",
+  //         "population": 30,
+  //         "color": "#78c679"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "10-15",
+  //         "population": 30,
+  //         "color": "#78c679"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "15-25",
+  //         "population": 25,
+  //         "color": "#78c679"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "25-35",
+  //         "population": 15,
+  //         "color": "#78c679"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "35-50",
+  //         "population": 75,
+  //         "color": "#31a354"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "50-65",
+  //         "population": 25,
+  //         "color": "#31a354"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": "65-75",
+  //         "population": 60,
+  //         "color": "#006837"
+  //       }
+  //     },
+  //     {
+  //       "nodeData": {
+  //         "age": ">75",
+  //         "population": 40,
+  //         "color": "#006837"
+  //       }
+  //     }
+  //   ]
+  // ];
+
+
   function groupBy(data = [], key = '',  numberKeys=[]) {
     let temp = {};
     let obj = null;
     let result = [];
 
     for (let i = 0; i < data.length; i++) {
-      obj = data[i];
+      obj = Object.assign({}, data[i]);
 
       if (!temp[obj[key]]) {
         temp[obj[key]] = obj;
+        console.log(temp);
       } else {
-        console.log(numberKeys.length);
+        console.log(temp);
         numberKeys.forEach((item) => {
           temp[obj[key]][item] += obj[item];
         });
@@ -112,14 +524,36 @@
       result.push(temp[prop]);
     }
 
+    if (result.length === 1) {
+      // fix translate bug from d3
+      result[0].single = true;
+    }
+
     return result;
   }
 
-  let groupedData = groupBy(data, 'category', ['bytes', 'hits']);
-  let groupedObjData = groupBy(objArr, 'key', ['val']);
+  // let colOne = groupBy(col_1, 'category', ['bytes', 'hits']);
+  // let colTwo = groupBy(col_2, 'category', ['bytes', 'hits']);
+  // let colThree = groupBy(col_3, 'category', ['bytes', 'hits']);
+  // console.log(colOne);
+  // console.log(colTwo);
+  // console.log(colThree);
 
-  console.log(groupedData);
-  console.log(groupedObjData);
+  // var arr = [colOne, colTwo, colThree];
+
+  // console.log(arr);
+
+  let col_1 = groupBy(data, 'Region', ['Unit', 'Actual Sales']);
+  let col_2 = groupBy(data, 'Country', ['Unit', 'Actual Sales']);
+  let col_3 = groupBy(data, 'Buyer', ['Unit', 'Actual Sales']);
+  console.log(col_1);
+  console.log(col_2);
+  console.log(col_3);
+
+  var arr = [col_1, col_2, col_3];
+
+  console.log(arr);
+
   </script>
 </body>
 

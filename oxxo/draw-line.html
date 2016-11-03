@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Document</title>
+  <script src="../d3.min.js"></script>
+</head>
+
+<body>
+  <script>
+  const data = [{
+    x: 10,
+    y: 10
+  }, {
+    x: 50,
+    y: 100
+  }, {
+    x: 60,
+    y: 50
+  }, {
+    x: 100,
+    y: 30
+  }];
+
+  const svg = d3.select('body')
+    .append('svg')
+    .attr({
+      width: 600,
+      height: 600
+    });
+
+  const line = d3.svg.line()
+    .x((d) => d.x)
+    .y((d) => d.y)
+    .interpolate('basis');
+
+  svg.append('path')
+    .attr({
+      d: line(data),
+      y: 0,
+      'stroke': '#000',
+      'stroke-width': '2px',
+      'fill': 'none'
+    });
+ 
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Work with APIs</title>
+  <script src="../d3.min.js"></script>
+  <style>
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: block;
+    shape-rendering: crispEdges;
+  }
+  
+  .axis text {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 10px;
+  }
+
+  h1 {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 100;
+    font-size: 16px;
+  }
+  
+  </style>
+</head>
+
+<body>
+  <script>
+  var h = 300;
+  var w = 600;
+  var padding = 20;
+
+  function getDate(d) {
+    var strDate = new String(d);
+
+    var year = strDate.substr(0, 4);
+    var month = strDate.substr(4, 2) - 1;
+    var day = strDate.substr(6, 2);
+
+    return new Date(year, month, day);
+
+  }
+
+  function showHeader(ds) {
+
+    d3.select("body").append("h1")
+      .text(ds.category + " Sales (2013)");
+
+  }
+
+  function buildLine(ds) {
+
+
+    var minDate = getDate(ds.monthlySales[0]['month']);
+    var maxDate = getDate(ds.monthlySales[ds.monthlySales.length - 1]['month']);
+
+
+    console.log('min: ' + minDate);
+    console.log('max: ' + maxDate);
+
+    var xScale = d3.time.scale()
+      .domain([minDate, maxDate])
+      .range([padding + 5, w - padding]);
+
+    var yScale = d3.scale.linear()
+      .domain([
+        0, d3.max(ds.monthlySales, (d) => d.sales),
+      ])
+      .range([h - padding, 10])
+      .nice();
+
+    var xAxisGen = d3.svg.axis().scale(xScale).orient('bottom').tickFormat(d3.time.format('%b'));
+    var yAxisGen = d3.svg.axis().scale(yScale).orient('left').ticks(4);
+
+    var lineFun = d3.svg.line()
+      .x((d) => xScale(getDate(d.month)))
+      .y((d) => yScale(d.sales))
+      .interpolate("linear");
+
+    var svg = d3.select("body").append("svg").attr({
+      width: w,
+      height: h
+    });
+
+    var yAxis = svg.append('g').call(yAxisGen)
+      .attr({
+        'class': 'axis'
+      })
+      .attr('transform', 'translate(' + padding + ', 0)');
+
+      var xAxis = svg.append('g').call(xAxisGen)
+        .attr({
+          'class': 'axis'
+        })
+        .attr('transform', 'translate(0, ' + ( h - padding ) + ')');
+
+    var viz = svg.append("path")
+      .attr({
+        d: lineFun(ds.monthlySales), //we have to refernce the sales data array
+        "stroke": "purple",
+        "stroke-width": 2,
+        "fill": "none"
+      });
+
+  }
+
+  var decodeData = null;
+  //call to load data and then build our viz
+  d3.json("https://api.github.com/repos/bsullins/d3js-resources/contents/monthlySalesbyCategoryMultiple.json", function(error, data) {
+
+    //check the file loaded properly
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(data);
+    }
+
+    decodeData = JSON.parse(window.atob(data.content));
+
+    decodeData.contents.forEach(function(ds) {
+      console.log(ds);
+      showHeader(ds); //give our chart a title
+      buildLine(ds); //draw our line
+    });
+
+  });
+  </script>
+</body>
+
+</html>
