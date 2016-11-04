@@ -23,25 +23,11 @@
       color: gray;
     }
     
-    .arc path {
-      stroke: #fff;
+    path {
+      stroke: rgba(255, 255, 255, .4);
+      stroke-width: 1;
     }
 
-    .Taiwan {
-      fill: #c2e699;
-    }
-
-    .Taiwan.Taipei {
-      fill: #78c679;
-    }
-
-    .Taiwan.Hsinchu {
-      fill: #31a354;
-    }
-
-    .Taiwan.Taichung {
-      fill: #006837;
-    }
   </style>
 </head>
 
@@ -187,8 +173,8 @@
     }]
   }];
 
-  const width = 500;
-  const height = 500;
+  const width = 550;
+  const height = 550;
   const maxRadius = Math.min(width, height) / 2;
 
   const svg = d3.select("body").append("svg")
@@ -260,7 +246,7 @@
       });
 
     const arc = d3.svg.arc()
-      .outerRadius((index + 1) * pieWidth - 1)
+      .outerRadius((index + 1) * pieWidth)
       .innerRadius(index * pieWidth);
 
     let g = svg.selectAll(".arc" + index).data(pie(_data)).enter().append("g")
@@ -268,19 +254,9 @@
 
     let path = g.append("path")
       .attr("d", arc)
-      // .style("fill", (d) => {
-      //   return color(d.data.num);
-      // });
-      .attr('class', (d) => {
-       if (d.data.Buyer) {
-         return d.data.Region + ' ' + d.data.Country + ' ' + d.data.Buyer; 
-       }
-
-       if (d.data.Country) {
-          return d.data.Region + ' ' + d.data.Country;
-       }
-
-        return d.data.Region;
+      .style("fill", (d) => {
+        debugger;
+        return color(d.data.Country);
       });
 
     g.append("text").attr("transform", function(d) {
@@ -298,7 +274,7 @@
 
   setMultiLevelData(data);
 
-  const pieWidth = parseInt(maxRadius / multiLevelData.length) - multiLevelData.length;
+  const pieWidth = parseInt(200 / multiLevelData.length) - multiLevelData.length;
 
   const color = d3.scale
     .ordinal()
@@ -372,6 +348,71 @@
       "Country": "Taipei",
       "Buyer": "Gang",
       "num": 60
+    }
+  ],
+  [
+    {
+      "Region": "Taiwan",
+      "Country": "Hsinchu",
+      "Buyer": "Farrai",
+      "Seller": "Bob",
+      "num": 20
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Hsinchu",
+      "Buyer": "Farrai",
+      "Seller": "Dannel",
+      "num": 20
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Hsinchu",
+      "Buyer": "Irving",
+      "Seller": "Dannel",
+      "num": 50
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Hsinchu",
+      "Buyer": "JJ",
+      "Seller": "Dannel",
+      "num": 10
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Taichung",
+      "Buyer": "Farrai",
+      "Seller": "Bob",
+      "num": 20
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Taichung",
+      "Buyer": "Helix",
+      "Seller": "Bob",
+      "num": 10
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Taipei",
+      "Buyer": "Emila",
+      "Seller": "Allen",
+      "num": 10
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Taipei",
+      "Buyer": "Gang",
+      "Seller": "Candy",
+      "num": 30
+    },
+    {
+      "Region": "Taiwan",
+      "Country": "Taipei",
+      "Buyer": "Gang",
+      "Seller": "Dannel",
+      "num": 30
     }
   ]
 ]
