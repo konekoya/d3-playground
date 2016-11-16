@@ -123,7 +123,7 @@
     }
   ];
 
-  function merge(source) {
+  function mergeData(source) {
     var temp = {};
     var obj = null;
     var values = [];
@@ -134,9 +134,10 @@
       if (!temp[obj.groupName]) {
         temp[obj.groupName] = obj;
         let item = temp[obj.groupName].values = [];
-        item.push({x: 'VOLUME', y: obj.val});
+        item.push({x: obj.aggInfo, y: obj.val});
         debugger;
       } else {
+        debugger;
         temp[obj.groupName].values.push({x: obj.aggInfo, y: obj.val});
         debugger;
       }
@@ -144,49 +145,48 @@
     return temp;
   }
 
-  function parseGroupedData(options) {
+  function getYaxisItemData(options) {
     const { data, baseField = '', yAxis } = options;
     let queryData = null;
     let result = [];
 
     yAxis.forEach((item) => {
-      const aggInfo = (item.aggField + ':' + item.agg).toUpperCase();
-      queryData = alasql(`SELECT ${baseField} as groupName, ${item.agg}([${item.aggField}]) as val, '${aggInfo}' as aggInfo FROM ? GROUP BY ${baseField}`, [data]);
-      debugger;
-      result.push(...queryData);
+      const { aggField, agg } = item; 
+      const aggInfo = (aggField + ':' + agg).toUpperCase();
+      if (item.aggField === 'VOLUME') {
+        queryData = alasql(`SELECT ${baseField} as groupName, COUNT([${baseField}]) as val, '${aggInfo}' as aggInfo FROM ? GROUP BY ${baseField}`, [data]);
+        result.push(...queryData);
+      } else {
+        queryData = alasql(`SELECT ${baseField} as groupName, ${item.agg}([${item.aggField}]) as val, '${aggInfo}' as aggInfo FROM ? GROUP BY ${baseField}`, [data]);
+        result.push(...queryData);
+      }
     });
 
-    debugger;
     return result;
   }
 
   let yAxis = params;
 
-  yAxis.shift()
+  // yAxis.shift()
 
   yAxis = yAxis.map((item) => {
     return {
-      agg: item.agg,
+      agg: item.agg || 'COUNT',
       aggField: item.meta.name
     }
   });
 
-  console.log(yAxis);
-
   let finalResult = '';
-  let res_1 = parseGroupedData({
+  let res_1 = getYaxisItemData({
     data,
     yAxis,
     baseField: 'Product'
   })
-  
-
-  // var res_1 = alasql('SELECT Region, Country, Buyer, Seller, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer, Seller ORDER BY Region, Country, Seller', [data]);
 
   console.log(res_1);
 
 
-  finalResult = merge(res_1);
+  finalResult = mergeData(res_1);
   console.log(finalResult);
 
   </script>
