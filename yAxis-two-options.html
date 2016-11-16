@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Raw data manipulation</title>
+  <script src="http://cdn.jsdelivr.net/alasql/latest/alasql.min.js"></script>
+  <script src="./d3.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<body>
+  <h1>Raw data manipulation</h1>
+  <script>
+  const data = [
+    {
+      "Product": "Amarta",
+      "Unit": 1,
+      "Actual Sales": 10,
+      "Seller": "Allen",
+      "Buyer": "Emila",
+      "Country": "Taipei",
+      "Region": "Taiwan"
+    },
+    {
+      "Product": "Filo Mix",
+      "Unit": 2,
+      "Actual Sales": 20,
+      "Seller": "Bob",
+      "Buyer": "Farrai",
+      "Country": "Taichung",
+      "Region": "Taiwan"
+    },
+    {
+      "Product": "Geitost",
+      "Unit": 3,
+      "Actual Sales": 30,
+      "Seller": "Candy",
+      "Buyer": "Gang",
+      "Country": "Taipei",
+      "Region": "Taiwan"
+    },
+    {
+      "Product": "Genen",
+      "Unit": 2,
+      "Actual Sales": 20,
+      "Seller": "Dannel",
+      "Buyer": "Farrai",
+      "Country": "Hsinchu",
+      "Region": "Taiwan"
+    },
+    {
+      "Product": "Filo Mix",
+      "Unit": 1,
+      "Actual Sales": 10,
+      "Seller": "Bob",
+      "Buyer": "Helix",
+      "Country": "Taichung",
+      "Region": "Taiwan"
+    },
+    {
+      "Product": "Genen",
+      "Unit": 5,
+      "Actual Sales": 50,
+      "Seller": "Dannel",
+      "Buyer": "Irving",
+      "Country": "Hsinchu",
+      "Region": "Taiwan"
+    },
+    {
+      "Product": "Genen",
+      "Unit": 3,
+      "Actual Sales": 30,
+      "Seller": "Dannel",
+      "Buyer": "Gang",
+      "Country": "Taipei",
+      "Region": "Taiwan"
+    },
+    {
+      "Product": "Filo Mix",
+      "Unit": 2,
+      "Actual Sales": 20,
+      "Seller": "Bob",
+      "Buyer": "Farrai",
+      "Country": "Hsinchu",
+      "Region": "Taiwan"
+    },
+    {
+      "Product": "Genen",
+      "Unit": 1,
+      "Actual Sales": 10,
+      "Seller": "Dannel",
+      "Buyer": "JJ",
+      "Country": "Hsinchu",
+      "Region": "Taiwan"
+    }
+  ];
+
+  const params = {
+    chartType: 'Bar',
+    x: {
+      field: 'pname',
+      name: 'Product',
+      type: 'string'
+    },
+
+    y: [
+        {
+          agg: null,
+          meta: {
+            field: '__VOLUME__',
+            name: 'VOLUME',
+            type: 'number'
+          }
+        },
+        {
+          agg: 'SUM',
+          meta: {
+            field: 'unit',
+            name: 'Unit',
+            type: 'number'
+          }
+        },
+        {
+          agg: 'SUM',
+          meta: {
+            field: 'sales',
+            name: 'Actual Sales',
+            type: 'number'
+          }
+        }
+    ]
+
+  };
+
+  function mergeData(arrs) {
+    const source = arrs;
+    debugger;
+    var temp = {};
+    var obj = null;
+    var values = [];
+
+    for (var i = 0; i < source.length; i++) {
+      obj = source[i];
+      debugger;
+      if (!temp[obj.groupName]) {
+        temp[obj.groupName] = obj;
+        let item = temp[obj.groupName].values = [];
+        item.push({x: 'VOLUME', y: obj.val});
+        debugger;
+      } else {
+        temp[obj.groupName].values.push({x: obj.aggInfo, y: obj.val});
+        debugger;
+      }
+    }
+    return temp;
+  }
+
+
+  function getVolumeData(options) {
+    const { data, baseField } = options;
+    let result = '';
+    result = alasql(`SELECT ${baseField} as groupName, COUNT([${baseField}]) as y FROM ? GROUP BY ${baseField}`, [data]);
+    return result;
+  }
+
+  function getYaxisItemData(options) {
+    const { data, baseField = '', groupByField = '', agg = 'SUM' } = options;
+    let result = '';
+    result = alasql(`SELECT ${baseField} as groupName, ${agg}([${groupByField}]) as y FROM ? GROUP BY ${baseField}`, [data]);
+    return result;
+  }
+
+  const yAxisItemData = getYaxisItemData({
+    data,
+    baseField: params.x.name,
+    agg: params.y[2].agg || 'SUM',
+    groupByField: params.y[2].meta.name
+  });
+
+  const volumeData = getVolumeData({
+    data,
+    baseField: params.x.name
+  });
+  debugger;
+
+  const mergedData = mergeData([...volumeData, ...yAxisItemData]);
+
+  // var res_1 = alasql('SELECT Region, Country, Buyer, Seller, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer, Seller ORDER BY Region, Country, Seller', [data]);
+
+
+  </script>
+</body>
+
+</html>

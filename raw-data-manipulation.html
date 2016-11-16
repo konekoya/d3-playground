@@ -351,157 +351,6 @@ var data = [
   }
 ]
 
-
-  //   multiLevelData = [
-  //   [
-  //     {
-  //       "nodeData": {
-  //         "age": "<5",
-  //         "population": 60,
-  //         "color": "#c2e699"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "5-35",
-  //         "population": 100,
-  //         "color": "#78c679"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "35-65",
-  //         "population": 100,
-  //         "color": "#31a354"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": ">65",
-  //         "population": 100,
-  //         "color": "#006837"
-  //       }
-  //     }
-  //   ],
-  //   [
-  //     {
-  //       "nodeData": {
-  //         "age": "<5",
-  //         "population": 60,
-  //         "color": "#c2e699"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "5-15",
-  //         "population": 60,
-  //         "color": "#78c679"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "15-35",
-  //         "population": 40,
-  //         "color": "#78c679"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "35-50",
-  //         "population": 75,
-  //         "color": "#31a354"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "50-65",
-  //         "population": 25,
-  //         "color": "#31a354"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "65-75",
-  //         "population": 60,
-  //         "color": "#006837"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": ">75",
-  //         "population": 40,
-  //         "color": "#006837"
-  //       }
-  //     }
-  //   ],
-  //   [
-  //     {
-  //       "nodeData": {
-  //         "age": "<5",
-  //         "population": 60,
-  //         "color": "#c2e699"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "5-10",
-  //         "population": 30,
-  //         "color": "#78c679"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "10-15",
-  //         "population": 30,
-  //         "color": "#78c679"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "15-25",
-  //         "population": 25,
-  //         "color": "#78c679"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "25-35",
-  //         "population": 15,
-  //         "color": "#78c679"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "35-50",
-  //         "population": 75,
-  //         "color": "#31a354"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "50-65",
-  //         "population": 25,
-  //         "color": "#31a354"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": "65-75",
-  //         "population": 60,
-  //         "color": "#006837"
-  //       }
-  //     },
-  //     {
-  //       "nodeData": {
-  //         "age": ">75",
-  //         "population": 40,
-  //         "color": "#006837"
-  //       }
-  //     }
-  //   ]
-  // ];
-
-
   function groupBy(data = [], key = '',  numberKeys = []) {
     let temp = {};
     let obj = null;
@@ -524,7 +373,6 @@ var data = [
     }
 
     if (result.length === 1) {
-      // fix translate bug from d3
       result[0].single = true;
     }
 
@@ -542,30 +390,26 @@ var data = [
 
   // console.log(arr);
 
-  let col_1 = groupBy(data, 'Region', ['Unit', 'Actual Sales']);
-  let col_2 = groupBy(data, 'Country', ['Unit', 'Actual Sales']);
-  let col_3 = groupBy(data, 'Buyer', ['Unit', 'Actual Sales']);
+  // let col_1 = groupBy(data, 'Region', ['Unit', 'Actual Sales']);
+  // let col_2 = groupBy(data, 'Country', ['Unit', 'Actual Sales']);
+  // let col_3 = groupBy(data, 'Buyer', ['Unit', 'Actual Sales']);
 
-  var arr = [col_1, col_2, col_3];
-  console.log(arr);
+  // var arr = [col_1, col_2, col_3];
+  // console.log(arr);
 
-  var res_1 = alasql('SELECT Region, SUM([Actual Sales]) AS num FROM ? GROUP BY Region ORDER BY Region', [data]);
+  var res_1 = alasql('SELECT Seller, SUM([Actual Sales]) AS y FROM ? GROUP BY Seller', [data]);
   var res_2 = alasql('SELECT Region, Country, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country ORDER BY Country', [data]);
   var res_3 = alasql('SELECT Region, Country, Buyer, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer ORDER BY Region, Country', [data]);
   var res_4 = alasql('SELECT Region, Country, Buyer, Seller, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer, Seller ORDER BY Region, Country, Seller', [data]);
 
 
-  // console.log(res_1);
-  // console.log(res_2);
-  // console.log(res_3);
-  // var res_2 = alasql('SELECT Country, SUM([Actual Sales]) AS num FROM ? GROUP BY Region, Country', [data]);
-  // var res_3 = alasql('SELECT Buyer, SUM([Actual Sales]) AS num FROM ? GROUP BY Region, Country, Buyer', [data]);
-  // console.log(res_1);
-  // console.log(res_2);
-  // console.log(res_3);
+  console.log(res_1);
+  console.log(res_2);
+  console.log(res_3);
+  console.log(res_4);
 
-  var newArr = [res_1, res_2, res_3, res_4];
-  console.log(newArr);
+  // var newArr = [res_1, res_2, res_3, res_4];
+  // console.log(newArr);
 
   </script>
 </body>
