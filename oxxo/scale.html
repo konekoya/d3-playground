@@ -9,51 +9,63 @@
 <body>
   <svg id="s">
   </svg>
-
   <script>
   const data = [{
     x: 0,
-    y: 1.89
+    y: 100
   }, {
-    x: 1,
-    y: 2.77
+    x: 10,
+    y: 154
   }, {
-    x: 2,
-    y: 0.86
+    x: 20,
+    y: 288
   }, {
-    x: 3,
-    y: 3.45
+    x: 30,
+    y: 187
   }, {
-    x: 4,
-    y: 4.13
+    x: 40,
+    y: 235
   }, {
-    x: 5,
-    y: 3.59
+    x: 50,
+    y: 198
   }, {
-    x: 6,
-    y: 2.33
+    x: 60,
+    y: 172
   }, {
-    x: 7,
-    y: 3.79
+    x: 70,
+    y: 134
   }, {
-    x: 8,
-    y: 2.61
+    x: 80,
+    y: 94
   }, {
-    x: 9,
-    y: 2.15
+    x: 90,
+    y: 88
   }];
 
   var width = 240,
     height = 120;
 
+  var minX = d3.min(data, function(d) {
+    return d.x
+  });
+  var maxX = d3.max(data, function(d) {
+    return d.x
+  });
+  var minY = d3.min(data, function(d) {
+    return d.y
+  });
+  var maxY = d3.max(data, function(d) {
+    return d.y
+  });
 
   var scaleX = d3.scale.linear()
     .range([0, width])
-    .domain([0, 9]);
+    .domain([minX, maxX])
+    .clamp(true);
 
   var scaleY = d3.scale.linear()
-    .range([0, height])
-    .domain([0, 5]);
+    .range([height, 0])
+    .domain([minY, maxY]);
 
 
   var s = d3.select('#s');

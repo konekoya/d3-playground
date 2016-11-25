@@ -267,149 +267,279 @@
   // }];
 
 
-var data = [
-  {
-    "Product": "Amarta",
-    "Unit": 1,
-    "Actual Sales": 10,
-    "Seller": "Allen",
-    "Buyer": "Emila",
-    "Country": "Taipei",
-    "Region": "Taiwan"
-  },
-  {
-    "Product": "Filo Mix",
-    "Unit": 2,
-    "Actual Sales": 20,
-    "Seller": "Bob",
-    "Buyer": "Farrai",
-    "Country": "Taichung",
-    "Region": "Taiwan"
-  },
-  {
-    "Product": "Geitost",
-    "Unit": 3,
-    "Actual Sales": 30,
-    "Seller": "Candy",
-    "Buyer": "Gang",
-    "Country": "Taipei",
-    "Region": "Taiwan"
-  },
-  {
-    "Product": "Genen",
-    "Unit": 2,
-    "Actual Sales": 20,
-    "Seller": "Dannel",
-    "Buyer": "Farrai",
-    "Country": "Hsinchu",
-    "Region": "Taiwan"
-  },
-  {
-    "Product": "Filo Mix",
-    "Unit": 1,
-    "Actual Sales": 10,
-    "Seller": "Bob",
-    "Buyer": "Helix",
-    "Country": "Taichung",
-    "Region": "Taiwan"
-  },
-  {
-    "Product": "Genen",
-    "Unit": 5,
-    "Actual Sales": 50,
-    "Seller": "Dannel",
-    "Buyer": "Irving",
-    "Country": "Hsinchu",
-    "Region": "Taiwan"
-  },
-  {
-    "Product": "Genen",
-    "Unit": 3,
-    "Actual Sales": 30,
-    "Seller": "Dannel",
-    "Buyer": "Gang",
-    "Country": "Taipei",
-    "Region": "Taiwan"
-  },
-  {
-    "Product": "Filo Mix",
-    "Unit": 2,
-    "Actual Sales": 20,
-    "Seller": "Bob",
-    "Buyer": "Farrai",
-    "Country": "Hsinchu",
-    "Region": "Taiwan"
-  },
-  {
-    "Product": "Genen",
-    "Unit": 1,
-    "Actual Sales": 10,
-    "Seller": "Dannel",
-    "Buyer": "JJ",
-    "Country": "Hsinchu",
-    "Region": "Taiwan"
-  }
-]
+  // var data = [
+  //   {
+  //     "Product": "Amarta",
+  //     "Unit": 1,
+  //     "Actual Sales": 10,
+  //     "Seller": "Allen",
+  //     "Buyer": "Emila",
+  //     "Country": "Taipei",
+  //     "Region": "Taiwan"
+  //   },
+  //   {
+  //     "Product": "Filo Mix",
+  //     "Unit": 2,
+  //     "Actual Sales": 20,
+  //     "Seller": "Bob",
+  //     "Buyer": "Farrai",
+  //     "Country": "Taichung",
+  //     "Region": "Taiwan"
+  //   },
+  //   {
+  //     "Product": "Geitost",
+  //     "Unit": 3,
+  //     "Actual Sales": 30,
+  //     "Seller": "Candy",
+  //     "Buyer": "Gang",
+  //     "Country": "Taipei",
+  //     "Region": "Taiwan"
+  //   },
+  //   {
+  //     "Product": "Genen",
+  //     "Unit": 2,
+  //     "Actual Sales": 20,
+  //     "Seller": "Dannel",
+  //     "Buyer": "Farrai",
+  //     "Country": "Hsinchu",
+  //     "Region": "Taiwan"
+  //   },
+  //   {
+  //     "Product": "Filo Mix",
+  //     "Unit": 1,
+  //     "Actual Sales": 10,
+  //     "Seller": "Bob",
+  //     "Buyer": "Helix",
+  //     "Country": "Taichung",
+  //     "Region": "Taiwan"
+  //   },
+  //   {
+  //     "Product": "Genen",
+  //     "Unit": 5,
+  //     "Actual Sales": 50,
+  //     "Seller": "Dannel",
+  //     "Buyer": "Irving",
+  //     "Country": "Hsinchu",
+  //     "Region": "Taiwan"
+  //   },
+  //   {
+  //     "Product": "Genen",
+  //     "Unit": 3,
+  //     "Actual Sales": 30,
+  //     "Seller": "Dannel",
+  //     "Buyer": "Gang",
+  //     "Country": "Taipei",
+  //     "Region": "Taiwan"
+  //   },
+  //   {
+  //     "Product": "Filo Mix",
+  //     "Unit": 2,
+  //     "Actual Sales": 20,
+  //     "Seller": "Bob",
+  //     "Buyer": "Farrai",
+  //     "Country": "Hsinchu",
+  //     "Region": "Taiwan"
+  //   },
+  //   {
+  //     "Product": "Genen",
+  //     "Unit": 1,
+  //     "Actual Sales": 10,
+  //     "Seller": "Dannel",
+  //     "Buyer": "JJ",
+  //     "Country": "Hsinchu",
+  //     "Region": "Taiwan"
+  //   }
+  // ]
 
-  function groupBy(data = [], key = '',  numberKeys = []) {
-    let temp = {};
+  const data = [
+    [{
+      "allSecondFields": "Emila"
+    }, {
+      "allSecondFields": "Farrai"
+    }, {
+      "allSecondFields": "Gang"
+    }, {
+      "allSecondFields": "Helix"
+    }, {
+      "allSecondFields": "Irving"
+    }, {
+      "allSecondFields": "JJ"
+    }],
+    [{
+      "groupName": "Amarta",
+      "x": "Emila",
+      "y": 10
+    }, {
+      "groupName": "Filo Mix",
+      "x": "Farrai",
+      "y": 40
+    }, {
+      "groupName": "Geitost",
+      "x": "Gang",
+      "y": 30
+    }, {
+      "groupName": "Genen",
+      "x": "Farrai",
+      "y": 20
+    }, {
+      "groupName": "Filo Mix",
+      "x": "Helix",
+      "y": 3333
+    }, {
+      "groupName": "Genen",
+      "x": "Irving",
+      "y": 50
+    }, {
+      "groupName": "Genen",
+      "x": "Gang",
+      "y": 30
+    }, {
+      "groupName": "Genen",
+      "x": "JJ",
+      "y": 10
+    }, {
+      "groupName": "Genen",
+      "x": "JJ",
+      "y": 10
+    }, {
+      "groupName": "Genen",
+      "x": "JJ",
+      "y": 10
+    }, {
+      "groupName": "Genen",
+      "x": "JJ",
+      "y": 1001212
+    }]
+  ];
+
+  // function groupBy(data = [], key = '',  numberKeys = []) {
+  //   let temp = {};
+  //   let obj = null;
+  //   let result = [];
+
+  //   for (let i = 0; i < data.length; i++) {
+  //     obj = Object.assign({}, data[i]);
+
+  //     if (!temp[obj[key]]) {
+  //       temp[obj[key]] = obj;
+  //     } else {
+  //       numberKeys.forEach((item) => {
+  //         temp[obj[key]][item] += obj[item];
+  //       });
+  //     }
+  //   }
+
+  //   for (let prop in temp) {
+  //     result.push(temp[prop]);
+  //   }
+
+  //   if (result.length === 1) {
+  //     result[0].single = true;
+  //   }
+
+  //   return result;
+  // }
+
+  // var res_1 = alasql('SELECT Product as x, SUM([Unit]) as y FROM ? GROUP BY Product', [data]);
+  // console.log(res_1);
+
+  function mergeBarClusterData(source) {
+    const temp = {};
+    const values = [];
+    const fields = source[0];
+    const data = source[1];
+    let arr = [];
     let obj = null;
-    let result = [];
+
+    function constructFields(collection) {
+      const list = collection.map((field) => {
+        const item = {};
+        item.x = Object.values(field)[0];
+        item.y = 0;
+        return item;
+      });
+      return list;
+    }
+
+    const defaultFields = constructFields(fields);
+
+    function replaceKey(keyArr, newKey) {
+      keyArr.forEach((key) => {
+        if (key.x === newKey.x && key.y === 0) {
+          debugger;
+          Object.assign(key, newKey);
+        } else if (key.x === newKey.x && key.y !== 0) {
+          debugger;
+          key.y += newKey.y;
+          debugger;
+        }
+      });
+    }
 
     for (let i = 0; i < data.length; i++) {
-      obj = Object.assign({}, data[i]);
-
-      if (!temp[obj[key]]) {
-        temp[obj[key]] = obj;
+      obj = data[i];
+      if (!temp[obj.groupName]) {
+        temp[obj.groupName] = obj;
+        const item = temp[obj.groupName].values = [];
+        const clonedObj = JSON.parse(JSON.stringify(defaultFields));
+        const tempObj = {};
+        tempObj.x = obj.x;
+        tempObj.y = obj.y;
+        replaceKey(clonedObj, tempObj)
+        item.push(...clonedObj);
+          debugger;
+        delete temp[obj.groupName].x;
+        delete temp[obj.groupName].y;
       } else {
-        numberKeys.forEach((item) => {
-          temp[obj[key]][item] += obj[item];
-        });
+        const item = temp[obj.groupName].values;
+        replaceKey(item, obj);
+          debugger;
+        delete temp[obj.groupName].x;
+        delete temp[obj.groupName].y;
       }
     }
 
-    for (let prop in temp) {
-      result.push(temp[prop]);
-    }
-
-    if (result.length === 1) {
-      result[0].single = true;
-    }
-
-    return result;
+    arr = Object.values(temp);
+    console.log(arr);
+    debugger;
+    return arr;
   }
 
-  // let colOne = groupBy(col_1, 'category', ['bytes', 'hits']);
-  // let colTwo = groupBy(col_2, 'category', ['bytes', 'hits']);
-  // let colThree = groupBy(col_3, 'category', ['bytes', 'hits']);
-  // console.log(colOne);
-  // console.log(colTwo);
-  // console.log(colThree);
 
-  // var arr = [colOne, colTwo, colThree];
+  mergeBarClusterData(data);
 
-  // console.log(arr);
+  const ds = [{
+    "x": "Emila",
+    "y": 0
+  }, {
+    "x": "Farrai",
+    "y": 0
+  }, {
+    "x": "Gang",
+    "y": 0
+  }, {
+    "x": "Helix",
+    "y": 0
+  }, {
+    "x": "Irving",
+    "y": 0
+  }, {
+    "x": "JJ",
+    "y": 0
+  }];
 
-  // let col_1 = groupBy(data, 'Region', ['Unit', 'Actual Sales']);
-  // let col_2 = groupBy(data, 'Country', ['Unit', 'Actual Sales']);
-  // let col_3 = groupBy(data, 'Buyer', ['Unit', 'Actual Sales']);
 
-  // var arr = [col_1, col_2, col_3];
-  // console.log(arr);
+  // var a = JSON.parse(JSON.stringify(ds));
+  // var b = JSON.parse(JSON.stringify(ds));
 
-  var res_1 = alasql('SELECT Product as x, SUM([Unit]) as y FROM ? GROUP BY Product', [data]);
-  // var res_2 = alasql('SELECT Region, Country, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country ORDER BY Country', [data]);
-  // var res_3 = alasql('SELECT Region, Country, Buyer, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer ORDER BY Region, Country', [data]);
-  // var res_4 = alasql('SELECT Region, Country, Buyer, Seller, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer, Seller ORDER BY Region, Country, Seller', [data]);
+  // var c = [{x: 'Emila', y: 199}];
 
 
-  console.log(res_1);
-  // console.log(res_2);
-  // console.log(res_3);
-  // console.log(res_4);
-
-  // var newArr = [res_1, res_2, res_3, res_4];
-  // console.log(newArr);
+  // a.forEach((obj) => {
+  //   if (obj.x !== c[0])
+  //   var obj = Object.assign({}, c[0], obj);
+  //   console.log(obj);
+  // });
 
   </script>
 </body>
