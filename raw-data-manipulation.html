@@ -466,12 +466,9 @@
     function replaceKey(keyArr, newKey) {
       keyArr.forEach((key) => {
         if (key.x === newKey.x && key.y === 0) {
-          debugger;
           Object.assign(key, newKey);
         } else if (key.x === newKey.x && key.y !== 0) {
-          debugger;
           key.y += newKey.y;
-          debugger;
         }
       });
     }
@@ -487,48 +484,47 @@
         tempObj.y = obj.y;
         replaceKey(clonedObj, tempObj)
         item.push(...clonedObj);
-          debugger;
         delete temp[obj.groupName].x;
         delete temp[obj.groupName].y;
       } else {
         const item = temp[obj.groupName].values;
         replaceKey(item, obj);
-          debugger;
         delete temp[obj.groupName].x;
         delete temp[obj.groupName].y;
       }
     }
 
     arr = Object.values(temp);
-    console.log(arr);
-    debugger;
     return arr;
   }
 
 
   mergeBarClusterData(data);
 
-  const ds = [{
-    "x": "Emila",
-    "y": 0
-  }, {
-    "x": "Farrai",
-    "y": 0
-  }, {
-    "x": "Gang",
-    "y": 0
-  }, {
-    "x": "Helix",
-    "y": 0
-  }, {
-    "x": "Irving",
-    "y": 0
-  }, {
-    "x": "JJ",
-    "y": 0
-  }];
+  // const ds = [{
+  //   "x": "Emila",
+  //   "y": 0
+  // }, {
+  //   "x": "Farrai",
+  //   "y": 0
+  // }, {
+  //   "x": "Gang",
+  //   "y": 0
+  // }, {
+  //   "x": "Helix",
+  //   "y": 0
+  // }, {
+  //   "x": "Irving",
+  //   "y": 0
+  // }, {
+  //   "x": "JJ",
+  //   "y": 0
+  // }];
 
+  console.log(data);
 
+  var res_1 = alasql('SELECT groupName as x FROM ?', [data[1]]);
+  console.log(res_1);
   // var a = JSON.parse(JSON.stringify(ds));
   // var b = JSON.parse(JSON.stringify(ds));
 

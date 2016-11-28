@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const immutableData = [
+      { doggy: 'Harry' },
+      { kitten: 'RayChang' },
+      { baby: 'DevinChen' },
+      { BigBaby: 'IkaH' }
+    ];
+
+    console.log(immutableData);
+
+
+    const arr = immutableData.map(data => {
+      console.log(Object.values(data)[0] === 'Harry')
+      if (Object.values(data)[0] === 'Harry') {
+        console.log('deleting data');
+        debugger;
+        delete data;
+        return null;
+      }
+      return Object.values(data)[0];
+    });
+    console.log(arr);
+
+    const mapObj = [...immutableData];
+    console.log(Object.values(mapObj[0] = 'oh'));
+
+    // var data = {
+    //   doggy: 'Harry',
+    //   kitten: 'RayChang',
+    //   baby: 'DevinChen',
+    //   BigBaby: 'IkaH'
+    // }
+
+    // const copy = immutableData.map(d => Object.values(d));
+    // const filtered = immutableData.filter(d => {
+    //   return Object.values(d)[0] === 'Harry';
+    // });
+
+    // console.log(immutableData)
+    // console.log('copy: ' + copy)
+    // console.dir(filtered);
+  </script>
+</body>
+</html>

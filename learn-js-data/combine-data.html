@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="../d3.min.js"></script>
+  <script>
+  const articles = [{
+    "id": 1,
+    "name": "vacuum cleaner",
+    "weight": 9.9,
+    "price": 89.9,
+    "brand_id": 2
+  }, {
+    "id": 2,
+    "name": "washing machine",
+    "weight": 540,
+    "price": 230,
+    "brand_id": 1
+  }, {
+    "id": 3,
+    "name": "hair dryer",
+    "weight": 1.2,
+    "price": 24.99,
+    "brand_id": 2
+  }, {
+    "id": 1,
+    "name": "super fast laptop",
+    "weight": 400,
+    "price": 899.9,
+    "brand_id": 1
+  }];
+
+  const brands = [{
+    "id": 1,
+    "name": "SuperKitchen"
+  }, {
+    "id": 2,
+    "name": "HomeSweetHome"
+  }, {
+    "id": 1,
+    "name": "SuperKitchen",
+    'weight': 400
+  } ];
+
+
+  articles.forEach(article => {
+    const result = brands.filter(brand => {
+      return article.brand_id === brand.id && article.weight === brand.weight;
+    });
+
+    debugger;
+    article.brand_name = (result.length !== 0) ? result[0].name : null;
+
+    console.log(article);
+    console.log(result);
+  });
+  </script>
+</body>
+
+</html>
