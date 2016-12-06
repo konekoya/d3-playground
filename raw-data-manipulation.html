@@ -5,538 +5,88 @@
   <meta charset="UTF-8">
   <title>Raw data manipulation</title>
   <script src="http://cdn.jsdelivr.net/alasql/latest/alasql.min.js"></script>
-  <script src="./d3.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
   <h1>Raw data manipulation</h1>
   <script>
-  // var data = [{
-  //   "category": "Search Engines",
-  //   "hits": 5,
-  //   "bytes": 50189
-  // }, {
-  //   "category": "Content Server",
-  //   "hits": 1,
-  //   "bytes": 17308
-  // }, {
-  //   "category": "Content Server",
-  //   "hits": 1,
-  //   "bytes": 47412
-  // }, {
-  //   "category": "Search Engines",
-  //   "hits": 1,
-  //   "bytes": 7601
-  // }, {
-  //   "category": "Business",
-  //   "hits": 1,
-  //   "bytes": 2847
-  // }, {
-  //   "category": "Content Server",
-  //   "hits": 1,
-  //   "bytes": 24210
-  // }, {
-  //   "category": "Internet Services",
-  //   "hits": 1,
-  //   "bytes": 3690
-  // }, {
-  //   "category": "Search Engines",
-  //   "hits": 6,
-  //   "bytes": 613036
-  // }, {
-  //   "category": "Search Engines",
-  //   "hits": 1,
-  //   "bytes": 2858
-  // }];
-
-  // objArr = [{
-  //   key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
-  //   val: 42
-  // }, {
-  //   key: "Mon Sep 24 2013 00: 00: 00 GMT - 0400",
-  //   val: 78
-  // }, {
-  //   key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
-  //   val: 23
-  // }, {
-  //   key: "Mon Sep 23 2013 00: 00: 00 GMT - 0400",
-  //   val: 54
-  // }, {
-  //   key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
-  //   val: 109
-  // }, {
-  //   key: "Mon Sep 25 2013 00: 00: 00 GMT - 0400",
-  //   val: 80
-  // }];
-
-  // var temp = {};
-  // var obj = null;
-
-  // for (var i = 0; i < data.length; i++) {
-  //   obj = data[i];
-
-  //   if (!temp[obj.category]) {
-  //     temp[obj.category] = obj;
-  //   } else {
-  //     temp[obj.category].bytes += obj.bytes;
-  //     temp[obj.category].hits += obj.hits;
-  //   }
-  // }
-  // var result = [];
-  // debugger;
-
-  // for (var prop in temp) {
-  //   debugger;
-
-  //   result.push(temp[prop]);
-  // }
-
-  // const col_1 = [{
-  //     "category": "Search Engines",
-  //     "hits": 5,
-  //     "bytes": 50189
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 1,
-  //     "bytes": 17308
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 1,
-  //     "bytes": 47412
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 1,
-  //     "bytes": 7601
-  //   }, {
-  //     "category": "Business",
-  //     "hits": 1,
-  //     "bytes": 2847
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 1,
-  //     "bytes": 24210
-  //   }, {
-  //     "category": "Internet Services",
-  //     "hits": 1,
-  //     "bytes": 3690
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 6,
-  //     "bytes": 613036
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 1,
-  //     "bytes": 2858
-  // }];
-
-  // const col_2 = [{
-  //     "category": "Search Engines",
-  //     "hits": 8,
-  //     "bytes": 501389
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 12,
-  //     "bytes": 173208
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 1,
-  //     "bytes": 471412
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 4,
-  //     "bytes": 76301
-  //   }, {
-  //     "category": "Business",
-  //     "hits": 9,
-  //     "bytes": 284732
-  //   }, {
-  //     "category": "Backup Server",
-  //     "hits": 11,
-  //     "bytes": 22101
-  //   }, {
-  //     "category": "Router",
-  //     "hits": 108,
-  //     "bytes": 36459550
-  //   }, {
-  //     "category": "Router",
-  //     "hits": 81,
-  //     "bytes": 459550
-  //   }, {
-  //     "category": "CMS",
-  //     "hits": 2,
-  //     "bytes": 369550
-  //   }, {
-  //     "category": "CMS",
-  //     "hits": 21,
-  //     "bytes": 45659550
-  //   },{
-  //     "category": "Content Server",
-  //     "hits": 15,
-  //     "bytes": 242101
-  //   }, {
-  //     "category": "Internet Services",
-  //     "hits": 11,
-  //     "bytes": 369550
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 6,
-  //     "bytes": 61036
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 9,
-  //     "bytes": 28458
-  // }];
-
-  // const col_3 = [{
-  //     "category": "Search Engines",
-  //     "hits": 5,
-  //     "bytes": 50189
-  //   }, {
-  //     "category": "Gaming Server",
-  //     "hits": 30,
-  //     "bytes": 17308
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 3,
-  //     "bytes": 178
-  //   }, {
-  //     "category": "Gaming Server",
-  //     "hits": 1,
-  //     "bytes": 173028
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 1,
-  //     "bytes": 47412
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 1,
-  //     "bytes": 7601
-  //   }, {
-  //     "category": "Business",
-  //     "hits": 1,
-  //     "bytes": 2847
-  //   }, {
-  //     "category": "VPN",
-  //     "hits": 11,
-  //     "bytes": 1738
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 1,
-  //     "bytes": 108
-  //   }, {
-  //     "category": "Content Server",
-  //     "hits": 1,
-  //     "bytes": 24210
-  //   }, {
-  //     "category": "Internet Services",
-  //     "hits": 6,
-  //     "bytes": 3690
-  //   }, {
-  //     "category": "Firebase Hosting",
-  //     "hits": 12,
-  //     "bytes": 525406
-  //   }, {
-  //     "category": "Firewall",
-  //     "hits": 61,
-  //     "bytes": 61036
-  //   }, {
-  //     "category": "Backup Server",
-  //     "hits": 3,
-  //     "bytes": 1540
-  //   }, {
-  //     "category": "Firebase Hosting",
-  //     "hits": 35,
-  //     "bytes": 112540
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 6,
-  //     "bytes": 613036
-  //   }, {
-  //     "category": "VPN",
-  //     "hits": 3,
-  //     "bytes": 1540
-  //   }, {
-  //     "category": "Firebase Hosting",
-  //     "hits": 35,
-  //     "bytes": 112540
-  //   }, {
-  //     "category": "Search Engines",
-  //     "hits": 1,
-  //     "bytes": 2858
-  // }];
+  const data = [{
+    "Product": "Amarta",
+    "Unit": 1,
+    "Actual Sales": 10,
+    "Seller": "Allen",
+    "Buyer": "Emila",
+    "Country": "Taipei",
+    "Region": "Taiwan"
+  }, {
+    "Product": "Filo Mix",
+    "Unit": 2,
+    "Actual Sales": 20,
+    "Seller": "Bob",
+    "Buyer": "Farrai",
+    "Country": "Taichung",
+    "Region": "Taiwan"
+  }, {
+    "Product": "Geitost",
+    "Unit": 3,
+    "Actual Sales": 30,
+    "Seller": "Candy",
+    "Buyer": "Gang",
+    "Country": "Taipei",
+    "Region": "Taiwan"
+  }, {
+    "Product": "Genen",
+    "Unit": 2,
+    "Actual Sales": 20,
+    "Seller": "Dannel",
+    "Buyer": "Farrai",
+    "Country": "Hsinchu",
+    "Region": "Taiwan"
+  }, {
+    "Product": "Filo Mix",
+    "Unit": 1,
+    "Actual Sales": 10,
+    "Seller": "Bob",
+    "Buyer": "Helix",
+    "Country": "Taichung",
+    "Region": "Taiwan"
+  }, {
+    "Product": "Genen",
+    "Unit": 5,
+    "Actual Sales": 50,
+    "Seller": "Dannel",
+    "Buyer": "Irving",
+    "Country": "Hsinchu",
+    "Region": "Taiwan"
+  }, {
+    "Product": "Genen",
+    "Unit": 3,
+    "Actual Sales": 30,
+    "Seller": "Dannel",
+    "Buyer": "Gang",
+    "Country": "Taipei",
+    "Region": "Taiwan"
+  }, {
+    "Product": "Filo Mix",
+    "Unit": 2,
+    "Actual Sales": 20,
+    "Seller": "Bob",
+    "Buyer": "Farrai",
+    "Country": "Hsinchu",
+    "Region": "Taiwan"
+  }, {
+    "Product": "Genen",
+    "Unit": 1,
+    "Actual Sales": 10,
+    "Seller": "Dannel",
+    "Buyer": "JJ",
+    "Country": "Hsinchu",
+    "Region": "Taiwan"
+  }]
 
 
-  // var data = [
-  //   {
-  //     "Product": "Amarta",
-  //     "Unit": 1,
-  //     "Actual Sales": 10,
-  //     "Seller": "Allen",
-  //     "Buyer": "Emila",
-  //     "Country": "Taipei",
-  //     "Region": "Taiwan"
-  //   },
-  //   {
-  //     "Product": "Filo Mix",
-  //     "Unit": 2,
-  //     "Actual Sales": 20,
-  //     "Seller": "Bob",
-  //     "Buyer": "Farrai",
-  //     "Country": "Taichung",
-  //     "Region": "Taiwan"
-  //   },
-  //   {
-  //     "Product": "Geitost",
-  //     "Unit": 3,
-  //     "Actual Sales": 30,
-  //     "Seller": "Candy",
-  //     "Buyer": "Gang",
-  //     "Country": "Taipei",
-  //     "Region": "Taiwan"
-  //   },
-  //   {
-  //     "Product": "Genen",
-  //     "Unit": 2,
-  //     "Actual Sales": 20,
-  //     "Seller": "Dannel",
-  //     "Buyer": "Farrai",
-  //     "Country": "Hsinchu",
-  //     "Region": "Taiwan"
-  //   },
-  //   {
-  //     "Product": "Filo Mix",
-  //     "Unit": 1,
-  //     "Actual Sales": 10,
-  //     "Seller": "Bob",
-  //     "Buyer": "Helix",
-  //     "Country": "Taichung",
-  //     "Region": "Taiwan"
-  //   },
-  //   {
-  //     "Product": "Genen",
-  //     "Unit": 5,
-  //     "Actual Sales": 50,
-  //     "Seller": "Dannel",
-  //     "Buyer": "Irving",
-  //     "Country": "Hsinchu",
-  //     "Region": "Taiwan"
-  //   },
-  //   {
-  //     "Product": "Genen",
-  //     "Unit": 3,
-  //     "Actual Sales": 30,
-  //     "Seller": "Dannel",
-  //     "Buyer": "Gang",
-  //     "Country": "Taipei",
-  //     "Region": "Taiwan"
-  //   },
-  //   {
-  //     "Product": "Filo Mix",
-  //     "Unit": 2,
-  //     "Actual Sales": 20,
-  //     "Seller": "Bob",
-  //     "Buyer": "Farrai",
-  //     "Country": "Hsinchu",
-  //     "Region": "Taiwan"
-  //   },
-  //   {
-  //     "Product": "Genen",
-  //     "Unit": 1,
-  //     "Actual Sales": 10,
-  //     "Seller": "Dannel",
-  //     "Buyer": "JJ",
-  //     "Country": "Hsinchu",
-  //     "Region": "Taiwan"
-  //   }
-  // ]
-
-  const data = [
-    [{
-      "allSecondFields": "Emila"
-    }, {
-      "allSecondFields": "Farrai"
-    }, {
-      "allSecondFields": "Gang"
-    }, {
-      "allSecondFields": "Helix"
-    }, {
-      "allSecondFields": "Irving"
-    }, {
-      "allSecondFields": "JJ"
-    }],
-    [{
-      "groupName": "Amarta",
-      "x": "Emila",
-      "y": 10
-    }, {
-      "groupName": "Filo Mix",
-      "x": "Farrai",
-      "y": 40
-    }, {
-      "groupName": "Geitost",
-      "x": "Gang",
-      "y": 30
-    }, {
-      "groupName": "Genen",
-      "x": "Farrai",
-      "y": 20
-    }, {
-      "groupName": "Filo Mix",
-      "x": "Helix",
-      "y": 3333
-    }, {
-      "groupName": "Genen",
-      "x": "Irving",
-      "y": 50
-    }, {
-      "groupName": "Genen",
-      "x": "Gang",
-      "y": 30
-    }, {
-      "groupName": "Genen",
-      "x": "JJ",
-      "y": 10
-    }, {
-      "groupName": "Genen",
-      "x": "JJ",
-      "y": 10
-    }, {
-      "groupName": "Genen",
-      "x": "JJ",
-      "y": 10
-    }, {
-      "groupName": "Genen",
-      "x": "JJ",
-      "y": 1001212
-    }]
-  ];
-
-  // function groupBy(data = [], key = '',  numberKeys = []) {
-  //   let temp = {};
-  //   let obj = null;
-  //   let result = [];
-
-  //   for (let i = 0; i < data.length; i++) {
-  //     obj = Object.assign({}, data[i]);
-
-  //     if (!temp[obj[key]]) {
-  //       temp[obj[key]] = obj;
-  //     } else {
-  //       numberKeys.forEach((item) => {
-  //         temp[obj[key]][item] += obj[item];
-  //       });
-  //     }
-  //   }
-
-  //   for (let prop in temp) {
-  //     result.push(temp[prop]);
-  //   }
-
-  //   if (result.length === 1) {
-  //     result[0].single = true;
-  //   }
-
-  //   return result;
-  // }
-
-  // var res_1 = alasql('SELECT Product as x, SUM([Unit]) as y FROM ? GROUP BY Product', [data]);
-  // console.log(res_1);
-
-  function mergeBarClusterData(source) {
-    const temp = {};
-    const values = [];
-    const fields = source[0];
-    const data = source[1];
-    let arr = [];
-    let obj = null;
-
-    function constructFields(collection) {
-      const list = collection.map((field) => {
-        const item = {};
-        item.x = Object.values(field)[0];
-        item.y = 0;
-        return item;
-      });
-      return list;
-    }
-
-    const defaultFields = constructFields(fields);
-
-    function replaceKey(keyArr, newKey) {
-      keyArr.forEach((key) => {
-        if (key.x === newKey.x && key.y === 0) {
-          Object.assign(key, newKey);
-        } else if (key.x === newKey.x && key.y !== 0) {
-          key.y += newKey.y;
-        }
-      });
-    }
-
-    for (let i = 0; i < data.length; i++) {
-      obj = data[i];
-      if (!temp[obj.groupName]) {
-        temp[obj.groupName] = obj;
-        const item = temp[obj.groupName].values = [];
-        const clonedObj = JSON.parse(JSON.stringify(defaultFields));
-        const tempObj = {};
-        tempObj.x = obj.x;
-        tempObj.y = obj.y;
-        replaceKey(clonedObj, tempObj)
-        item.push(...clonedObj);
-        delete temp[obj.groupName].x;
-        delete temp[obj.groupName].y;
-      } else {
-        const item = temp[obj.groupName].values;
-        replaceKey(item, obj);
-        delete temp[obj.groupName].x;
-        delete temp[obj.groupName].y;
-      }
-    }
-
-    arr = Object.values(temp);
-    return arr;
-  }
-
-
-  mergeBarClusterData(data);
-
-  // const ds = [{
-  //   "x": "Emila",
-  //   "y": 0
-  // }, {
-  //   "x": "Farrai",
-  //   "y": 0
-  // }, {
-  //   "x": "Gang",
-  //   "y": 0
-  // }, {
-  //   "x": "Helix",
-  //   "y": 0
-  // }, {
-  //   "x": "Irving",
-  //   "y": 0
-  // }, {
-  //   "x": "JJ",
-  //   "y": 0
-  // }];
-
-  console.log(data);
-
-  var res_1 = alasql('SELECT groupName as x FROM ?', [data[1]]);
+  var res_1 = alasql('SELECT Product as x, SUM([Actual Sales]) as y FROM ? GROUP BY Product', [data]);
   console.log(res_1);
-  // var a = JSON.parse(JSON.stringify(ds));
-  // var b = JSON.parse(JSON.stringify(ds));
-
-  // var c = [{x: 'Emila', y: 199}];
-
-
-  // a.forEach((obj) => {
-  //   if (obj.x !== c[0])
-  //   var obj = Object.assign({}, c[0], obj);
-  //   console.log(obj);
-  // });
-
   </script>
 </body>
 
