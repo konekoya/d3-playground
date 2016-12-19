@@ -7,3 +7,63 @@ body {
 h1 {
   font-weight: normal;
 }
+
+
+/* Animating svg */
+.container {
+  margin: auto;
+  width: 900px;
+}
+.svg-container {
+  width: 100px;
+  display: inline-block;
+  position: relative;
+}
+
+
+.buble-inner {
+  width: 35px;
+  margin: -20px 0 0 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.buble-frame {
+  width: 100px;
+}
+
+.buble-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: fast 1s 1s;
+}
+
+.buble-bar-top {
+  top: 10px;
+  animation-delay: .2s;
+}
+
+.buble-bar-middle {
+  top: 20px;
+  animation-delay: .4s;
+}
+
+.buble-bar-bottom {
+  top: 30px;
+  animation-delay: .6s;
+}
+
+
+@keyframes fast {
+  0% {
+    opacity: 1;
+    left: 0;
+  }
+  100% {
+    opacity: 0;
+    left: 30px;
+  }
+}
