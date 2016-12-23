@@ -10,79 +10,79 @@
 <body>
   <h1>Raw data manipulation</h1>
   <script>
-  const data = [{
-    "Product": "Amarta",
-    "Unit": 1,
-    "Actual Sales": 10,
-    "Seller": "Allen",
-    "Buyer": "Emila",
-    "Country": "Taipei",
-    "Region": "Taiwan"
-  }, {
-    "Product": "Filo Mix",
-    "Unit": 2,
-    "Actual Sales": 20,
-    "Seller": "Bob",
-    "Buyer": "Farrai",
-    "Country": "Taichung",
-    "Region": "Taiwan"
-  }, {
-    "Product": "Geitost",
-    "Unit": 3,
-    "Actual Sales": 30,
-    "Seller": "Candy",
-    "Buyer": "Gang",
-    "Country": "Taipei",
-    "Region": "Taiwan"
-  }, {
-    "Product": "Genen",
-    "Unit": 2,
-    "Actual Sales": 20,
-    "Seller": "Dannel",
-    "Buyer": "Farrai",
-    "Country": "Hsinchu",
-    "Region": "Taiwan"
-  }, {
-    "Product": "Filo Mix",
-    "Unit": 1,
-    "Actual Sales": 10,
-    "Seller": "Bob",
-    "Buyer": "Helix",
-    "Country": "Taichung",
-    "Region": "Taiwan"
-  }, {
-    "Product": "Genen",
-    "Unit": 5,
-    "Actual Sales": 50,
-    "Seller": "Dannel",
-    "Buyer": "Irving",
-    "Country": "Hsinchu",
-    "Region": "Taiwan"
-  }, {
-    "Product": "Genen",
-    "Unit": 3,
-    "Actual Sales": 30,
-    "Seller": "Dannel",
-    "Buyer": "Gang",
-    "Country": "Taipei",
-    "Region": "Taiwan"
-  }, {
-    "Product": "Filo Mix",
-    "Unit": 2,
-    "Actual Sales": 20,
-    "Seller": "Bob",
-    "Buyer": "Farrai",
-    "Country": "Hsinchu",
-    "Region": "Taiwan"
-  }, {
-    "Product": "Genen",
-    "Unit": 1,
-    "Actual Sales": 10,
-    "Seller": "Dannel",
-    "Buyer": "JJ",
-    "Country": "Hsinchu",
-    "Region": "Taiwan"
-  }]
+  // const data = [{
+  //   "Product": "Amarta",
+  //   "Unit": 1,
+  //   "Actual Sales": 10,
+  //   "Seller": "Allen",
+  //   "Buyer": "Emila",
+  //   "Country": "Taipei",
+  //   "Region": "Taiwan"
+  // }, {
+  //   "Product": "Filo Mix",
+  //   "Unit": 2,
+  //   "Actual Sales": 20,
+  //   "Seller": "Bob",
+  //   "Buyer": "Farrai",
+  //   "Country": "Taichung",
+  //   "Region": "Taiwan"
+  // }, {
+  //   "Product": "Geitost",
+  //   "Unit": 3,
+  //   "Actual Sales": 30,
+  //   "Seller": "Candy",
+  //   "Buyer": "Gang",
+  //   "Country": "Taipei",
+  //   "Region": "Taiwan"
+  // }, {
+  //   "Product": "Genen",
+  //   "Unit": 2,
+  //   "Actual Sales": 20,
+  //   "Seller": "Dannel",
+  //   "Buyer": "Farrai",
+  //   "Country": "Hsinchu",
+  //   "Region": "Taiwan"
+  // }, {
+  //   "Product": "Filo Mix",
+  //   "Unit": 1,
+  //   "Actual Sales": 10,
+  //   "Seller": "Bob",
+  //   "Buyer": "Helix",
+  //   "Country": "Taichung",
+  //   "Region": "Taiwan"
+  // }, {
+  //   "Product": "Genen",
+  //   "Unit": 5,
+  //   "Actual Sales": 50,
+  //   "Seller": "Dannel",
+  //   "Buyer": "Irving",
+  //   "Country": "Hsinchu",
+  //   "Region": "Taiwan"
+  // }, {
+  //   "Product": "Genen",
+  //   "Unit": 3,
+  //   "Actual Sales": 30,
+  //   "Seller": "Dannel",
+  //   "Buyer": "Gang",
+  //   "Country": "Taipei",
+  //   "Region": "Taiwan"
+  // }, {
+  //   "Product": "Filo Mix",
+  //   "Unit": 2,
+  //   "Actual Sales": 20,
+  //   "Seller": "Bob",
+  //   "Buyer": "Farrai",
+  //   "Country": "Hsinchu",
+  //   "Region": "Taiwan"
+  // }, {
+  //   "Product": "Genen",
+  //   "Unit": 1,
+  //   "Actual Sales": 10,
+  //   "Seller": "Dannel",
+  //   "Buyer": "JJ",
+  //   "Country": "Hsinchu",
+  //   "Region": "Taiwan"
+  // }]
 
 
   // var res_1 = alasql('SELECT Region as Region, SUM([Actual Sales]) as num FROM ? GROUP BY Region', [data]);
@@ -91,12 +91,599 @@
   // console.log(res_2);
 
 
-  var res_1 = alasql('SELECT Region, SUM([Actual Sales]) AS num FROM ? GROUP BY Region ORDER BY Region', [data]);
-  var res_2 = alasql('SELECT Region, Country, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country ORDER BY Country', [data]);
-  var res_3 = alasql('SELECT Region, Country, Buyer, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer ORDER BY Region, Country', [data]);
-  console.log(res_1);
-  console.log(res_2);
-  console.log(res_3);
+  // var res_1 = alasql('SELECT Region, SUM([Actual Sales]) AS num FROM ? GROUP BY Region ORDER BY Region', [data]);
+  // var res_2 = alasql('SELECT Region, Country, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country ORDER BY Country', [data]);
+  // var res_3 = alasql('SELECT Region, Country, Buyer, SUM([Actual Sales]) as num FROM ? GROUP BY Region, Country, Buyer ORDER BY Region, Country', [data]);
+  // console.log(res_1);
+  // console.log(res_2);
+  // console.log(res_3);
+
+  const mockData1 = [
+    {
+      學年度: 96,
+      年齡: 6,
+      總計: 117.1,
+      男: 117.6,
+      女: 116.6
+    },
+    {
+      學年度: 96,
+      年齡: 7,
+      總計: 121.4,
+      男: 121.9,
+      女: 120.9
+    },
+    {
+      學年度: 96,
+      年齡: 8,
+      總計: 127.1,
+      男: 127.5,
+      女: 126.7
+    },
+    {
+      學年度: 96,
+      年齡: 9,
+      總計: 132.8,
+      男: 132.9,
+      女: 132.6
+    },
+    {
+      學年度: 96,
+      年齡: 10,
+      總計: 138.8,
+      男: 138.5,
+      女: 139.3
+    },
+    {
+      學年度: 96,
+      年齡: 11,
+      總計: 145,
+      男: 144.2,
+      女: 145.9
+    },
+    {
+      學年度: 96,
+      年齡: 12,
+      總計: 151.4,
+      男: 151.2,
+      女: 151.6
+    },
+    {
+      學年度: 96,
+      年齡: 13,
+      總計: 157.1,
+      男: 158.9,
+      女: 155.3
+    },
+    {
+      學年度: 96,
+      年齡: 14,
+      總計: 161.1,
+      男: 164.7,
+      女: 157.3
+    },
+    {
+      學年度: 96,
+      年齡: 15,
+      總計: 163.2,
+      男: 167.8,
+      女: 158.1
+    },
+    {
+      學年度: 97,
+      年齡: 6,
+      總計: 117.2,
+      男: 117.6,
+      女: 116.7
+    },
+    {
+      學年度: 97,
+      年齡: 7,
+      總計: 121.5,
+      男: 121.9,
+      女: 120.9
+    },
+    {
+      學年度: 97,
+      年齡: 8,
+      總計: 127.3,
+      男: 127.7,
+      女: 126.8
+    },
+    {
+      學年度: 97,
+      年齡: 9,
+      總計: 132.9,
+      男: 133.1,
+      女: 132.7
+    },
+    {
+      學年度: 97,
+      年齡: 10,
+      總計: 138.8,
+      男: 138.4,
+      女: 139.1
+    },
+    {
+      學年度: 97,
+      年齡: 11,
+      總計: 145.3,
+      男: 144.5,
+      女: 146.1
+    },
+    {
+      學年度: 97,
+      年齡: 12,
+      總計: 151.4,
+      男: 151.3,
+      女: 151.6
+    },
+    {
+      學年度: 97,
+      年齡: 13,
+      總計: 157.2,
+      男: 158.9,
+      女: 155.4
+    },
+    {
+      學年度: 97,
+      年齡: 14,
+      總計: 161.3,
+      男: 165,
+      女: 157.3
+    },
+    {
+      學年度: 97,
+      年齡: 15,
+      總計: 163.3,
+      男: 168,
+      女: 158.2
+    },
+    {
+      學年度: 98,
+      年齡: 6,
+      總計: 117.3,
+      男: 117.8,
+      女: 116.8
+    },
+    {
+      學年度: 98,
+      年齡: 7,
+      總計: 121.6,
+      男: 122,
+      女: 121.1
+    },
+    {
+      學年度: 98,
+      年齡: 8,
+      總計: 127.3,
+      男: 127.7,
+      女: 126.8
+    },
+    {
+      學年度: 98,
+      年齡: 9,
+      總計: 133,
+      男: 133.2,
+      女: 132.8
+    },
+    {
+      學年度: 98,
+      年齡: 10,
+      總計: 138.8,
+      男: 138.4,
+      女: 139.1
+    },
+    {
+      學年度: 98,
+      年齡: 11,
+      總計: 145.1,
+      男: 144.3,
+      女: 145.9
+    },
+    {
+      學年度: 98,
+      年齡: 12,
+      總計: 151.6,
+      男: 151.5,
+      女: 151.7
+    },
+    {
+      學年度: 98,
+      年齡: 13,
+      總計: 157.3,
+      男: 159,
+      女: 155.4
+    },
+    {
+      學年度: 98,
+      年齡: 14,
+      總計: 161.2,
+      男: 164.9,
+      女: 157.3
+    },
+    {
+      學年度: 98,
+      年齡: 15,
+      總計: 163.2,
+      男: 167.9,
+      女: 158.1
+    },
+    {
+      學年度: 99,
+      年齡: 6,
+      總計: 117.3,
+      男: 117.8,
+      女: 116.7
+    },
+    {
+      學年度: 99,
+      年齡: 7,
+      總計: 121.5,
+      男: 122,
+      女: 121
+    },
+    {
+      學年度: 99,
+      年齡: 8,
+      總計: 127.3,
+      男: 127.7,
+      女: 126.9
+    },
+    {
+      學年度: 99,
+      年齡: 9,
+      總計: 133,
+      男: 133.2,
+      女: 132.8
+    },
+    {
+      學年度: 99,
+      年齡: 10,
+      總計: 138.9,
+      男: 138.6,
+      女: 139.2
+    },
+    {
+      學年度: 99,
+      年齡: 11,
+      總計: 145.1,
+      男: 144.3,
+      女: 145.9
+    },
+    {
+      學年度: 99,
+      年齡: 12,
+      總計: 151.4,
+      男: 151.3,
+      女: 151.6
+    },
+    {
+      學年度: 99,
+      年齡: 13,
+      總計: 157.3,
+      男: 159.1,
+      女: 155.4
+    },
+    {
+      學年度: 99,
+      年齡: 14,
+      總計: 161.3,
+      男: 165,
+      女: 157.3
+    },
+    {
+      學年度: 99,
+      年齡: 15,
+      總計: 163.2,
+      男: 168,
+      女: 158.1
+    },
+    {
+      學年度: 100,
+      年齡: 6,
+      總計: 117.3,
+      男: 117.8,
+      女: 116.7
+    },
+    {
+      學年度: 100,
+      年齡: 7,
+      總計: 121.4,
+      男: 121.9,
+      女: 120.9
+    },
+    {
+      學年度: 100,
+      年齡: 8,
+      總計: 127.3,
+      男: 127.7,
+      女: 126.8
+    },
+    {
+      學年度: 100,
+      年齡: 9,
+      總計: 132.9,
+      男: 133.1,
+      女: 132.7
+    },
+    {
+      學年度: 100,
+      年齡: 10,
+      總計: 138.7,
+      男: 138.5,
+      女: 139
+    },
+    {
+      學年度: 100,
+      年齡: 11,
+      總計: 145.1,
+      男: 144.4,
+      女: 145.9
+    },
+    {
+      學年度: 100,
+      年齡: 12,
+      總計: 151.4,
+      男: 151.2,
+      女: 151.5
+    },
+    {
+      學年度: 100,
+      年齡: 13,
+      總計: 157.1,
+      男: 158.8,
+      女: 155.2
+    },
+    {
+      學年度: 100,
+      年齡: 14,
+      總計: 161.3,
+      男: 164.9,
+      女: 157.3
+    },
+    {
+      學年度: 100,
+      年齡: 15,
+      總計: 163.2,
+      男: 167.9,
+      女: 158.1
+    },
+    {
+      學年度: 101,
+      年齡: 6,
+      總計: 117.3,
+      男: 117.8,
+      女: 116.7
+    },
+    {
+      學年度: 101,
+      年齡: 7,
+      總計: 121.5,
+      男: 122,
+      女: 121
+    },
+    {
+      學年度: 101,
+      年齡: 8,
+      總計: 127.3,
+      男: 127.7,
+      女: 126.8
+    },
+    {
+      學年度: 101,
+      年齡: 9,
+      總計: 133,
+      男: 133.2,
+      女: 132.8
+    },
+    {
+      學年度: 101,
+      年齡: 10,
+      總計: 138.8,
+      男: 138.5,
+      女: 139.2
+    },
+    {
+      學年度: 101,
+      年齡: 11,
+      總計: 145.1,
+      男: 144.4,
+      女: 145.9
+    },
+    {
+      學年度: 101,
+      年齡: 12,
+      總計: 151.5,
+      男: 151.5,
+      女: 151.6
+    },
+    {
+      學年度: 101,
+      年齡: 13,
+      總計: 157.2,
+      男: 158.9,
+      女: 155.3
+    },
+    {
+      學年度: 101,
+      年齡: 14,
+      總計: 161.2,
+      男: 164.8,
+      女: 157.2
+    },
+    {
+      學年度: 101,
+      年齡: 15,
+      總計: 163.3,
+      男: 168,
+      女: 158.1
+    },
+    {
+      學年度: 102,
+      年齡: 6,
+      總計: 117.3,
+      男: 117.8,
+      女: 116.7
+    },
+    {
+      學年度: 102,
+      年齡: 7,
+      總計: 121.6,
+      男: 122.1,
+      女: 121.1
+    },
+    {
+      學年度: 102,
+      年齡: 8,
+      總計: 127.5,
+      男: 127.9,
+      女: 127
+    },
+    {
+      學年度: 102,
+      年齡: 9,
+      總計: 133.1,
+      男: 133.4,
+      女: 132.8
+    },
+    {
+      學年度: 102,
+      年齡: 10,
+      總計: 139,
+      男: 138.7,
+      女: 139.3
+    },
+    {
+      學年度: 102,
+      年齡: 11,
+      總計: 145.2,
+      男: 144.5,
+      女: 146
+    },
+    {
+      學年度: 102,
+      年齡: 12,
+      總計: 151.5,
+      男: 151.4,
+      女: 151.6
+    },
+    {
+      學年度: 102,
+      年齡: 13,
+      總計: 157.4,
+      男: 159.1,
+      女: 155.4
+    },
+    {
+      學年度: 102,
+      年齡: 14,
+      總計: 161.3,
+      男: 165,
+      女: 157.4
+    },
+    {
+      學年度: 102,
+      年齡: 15,
+      總計: 163.3,
+      男: 167.9,
+      女: 158.2
+    },
+    {
+      學年度: 103,
+      年齡: 6,
+      總計: 116.5,
+      男: 117,
+      女: 115.9
+    },
+    {
+      學年度: 103,
+      年齡: 7,
+      總計: 121.6,
+      男: 122.1,
+      女: 121.1
+    },
+    {
+      學年度: 103,
+      年齡: 8,
+      總計: 127.6,
+      男: 128.1,
+      女: 127
+    },
+    {
+      學年度: 103,
+      年齡: 9,
+      總計: 133.3,
+      男: 133.5,
+      女: 133.1
+    },
+    {
+      學年度: 103,
+      年齡: 10,
+      總計: 139,
+      男: 138.8,
+      女: 139.3
+    },
+    {
+      學年度: 103,
+      年齡: 11,
+      總計: 145.4,
+      男: 144.7,
+      女: 146.2
+    },
+    {
+      學年度: 103,
+      年齡: 12,
+      總計: 151.8,
+      男: 151.6,
+      女: 152
+    },
+    {
+      學年度: 103,
+      年齡: 13,
+      總計: 157.5,
+      男: 159.3,
+      女: 155.6
+    },
+    {
+      學年度: 103,
+      年齡: 14,
+      總計: 161.6,
+      男: 165.3,
+      女: 157.5
+    },
+    {
+      學年度: 103,
+      年齡: 15,
+      總計: 163.7,
+      男: 168.5,
+      女: 158.4
+    }
+  ];
+
+
+  const data = mockData1;
+  const refObj = Object.keys(mockData1[0]);
+  const baseField = refObj[4];
+  let keys = [];
+  
+  if (refObj.length > 0) {
+    keys = refObj.slice(0, 3);
+  }
+
+  console.log(keys);
+
+    const query_1 = alasql(`SELECT [${keys[0]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}] ORDER BY [${keys[0]}]`, [data]);
+    console.log(query_1);
+    const query_2 = alasql(`SELECT [${keys[0]}], [${keys[1]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}], [${keys[1]}]`, [data]);
+    console.log(query_2);
+
+    const query_3 = alasql(`SELECT [${keys[0]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}] ORDER BY [${keys[0]}]`, [data]);
+
+
+
+
+
   </script>
 </body>
 
