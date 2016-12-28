@@ -5,6 +5,16 @@
   <meta charset="UTF-8">
   <title>Raw data manipulation</title>
   <script src="http://cdn.jsdelivr.net/alasql/latest/alasql.min.js"></script>
+  <style>
+    body {
+      font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 100%;
+    }
+
+    h1 {
+      font-size: 36px;
+    }
+  </style>
 </head>
 
 <body>
@@ -100,10 +110,10 @@
 
   const mockData1 = [
     {
-      學年度: 96,
-      年齡: 6,
-      總計: 117.1,
-      男: 117.6,
+      // 學年度: 96,
+      // 年齡: 6,
+      // 總計: 117.1,
+      // 男: 117.6,
       女: 116.6
     },
     {
@@ -662,27 +672,43 @@
   ];
 
 
+  // Initial pie
   const data = mockData1;
   const refObj = Object.keys(mockData1[0]);
-  const baseField = refObj[4];
+  const objLen = refObj.length;
+  const baseField = refObj[0];
   let keys = [];
   
-  if (refObj.length > 0) {
-    keys = refObj.slice(0, 3);
-  }
+  if (objLen) {
+    if (objLen >= 3) {
+      keys = refObj.slice(0, 3);
+    } else {
+        keys = refObj.slice(0, objLen);
+      }
+  } 
 
-  console.log(keys);
+  const result = [];
+  keys.forEach((key, idx, arr) => {
+    const firstField = arr[0];
+    const secondField = arr[1];
+    const thirdField = arr[2];
 
-    const query_1 = alasql(`SELECT [${keys[0]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}] ORDER BY [${keys[0]}]`, [data]);
-    console.log(query_1);
-    const query_2 = alasql(`SELECT [${keys[0]}], [${keys[1]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}], [${keys[1]}]`, [data]);
-    console.log(query_2);
-
-    const query_3 = alasql(`SELECT [${keys[0]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}] ORDER BY [${keys[0]}]`, [data]);
-
-
-
-
+    let query = null;
+    if (idx === 0) {
+      query = alasql(`SELECT [${firstField}], SUM([${baseField}]) AS num FROM ? GROUP BY [${firstField}] ORDER BY [${firstField}]`, [data]);
+      result.push(query);
+    } else if (idx === 1) {
+      query = alasql(`SELECT [${firstField}], [${secondField}], SUM([${baseField}]) AS num FROM ? GROUP BY [${firstField}], [${secondField}] ORDER BY [${firstField}], [${secondField}]`, [data]);
+      result.push(query);
+    } else if (idx === 2) {
+      query = alasql(`SELECT [${firstField}], [${secondField}], [${thirdField}], SUM([${baseField}]) AS num FROM ? GROUP BY [${firstField}], [${secondField}], [${thirdField}] ORDER BY [${firstField}], [${secondField}], [${firstField}]`, [data]);
+      result.push(query);
+    }
+  });
+  console.log(result);
+  // const query_1 = alasql(`SELECT [${keys[0]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}] ORDER BY [${keys[0]}]`, [data]);
+  // const query_2 = alasql(`SELECT [${keys[0]}], [${keys[1]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}], [${keys[1]}]`, [data]);
+  // const query_3 = alasql(`SELECT [${keys[0]}], SUM([${baseField}]) AS num FROM ? GROUP BY [${keys[0]}] ORDER BY [${keys[0]}]`, [data]);
 
   </script>
 </body>
